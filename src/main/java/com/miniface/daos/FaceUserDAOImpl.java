@@ -29,9 +29,8 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 	}
 
 	@Override
-	public int login(String username, String password, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException{
-		int result = 0;
-	
+	public JsonArray login(String username, String password, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException{
+
 		statement = connection.prepareStatement(SqlStringsClass.getLoginUser());
 		statement.setString(1, username);
 		statement.setString(2, password);
@@ -39,12 +38,9 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		JsonArray jsonArray = null;
 		jsonArray = ConnectionClass.executePreparedStatement(statement);
 			
-		if(!jsonArray.isEmpty()) {
-			System.out.println(jsonArray.toString());
-			result = 1;
-		}
-		
-		return result;
+		System.out.println(jsonArray.toString());					
+
+		return jsonArray;
 	}
 
 }

@@ -30,6 +30,12 @@ public class RegisterUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/register_user.jsp");
+		request.setAttribute("form-firstName", "");
+		request.setAttribute("form-lastName", "");
+		request.setAttribute("form-username", "");
+		request.setAttribute("form-email", "");
+		request.setAttribute("form-password", "");
+		
 		request.setAttribute("errorMessages", null);
 		view.forward(request, response);
 		
@@ -54,6 +60,12 @@ public class RegisterUser extends HttpServlet {
 		faceUser.setEmail(email);
 		faceUser.setUsername(username);
 		faceUser.setPassword(password);
+		
+		request.setAttribute("form-firstName", name);
+		request.setAttribute("form-lastName", surname);
+		request.setAttribute("form-username", username);
+		request.setAttribute("form-email", email);
+		request.setAttribute("form-password", password);
 
 		String[] errorMessages = inputValidator.validateInput(faceUser);
 
@@ -66,14 +78,15 @@ public class RegisterUser extends HttpServlet {
 				System.out.println("User added successfully");
 				response.sendRedirect("login");
 			}else {
-				System.out.println("User not added");
+				request.setAttribute("errorMessages", new String[] {"Registration failed, unique username and email required"});
 			}
 			
 		}else {
 			request.setAttribute("errorMessages", errorMessages);
-			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/register_user.jsp");	
-			view.forward(request, response);
 		}
+		
+		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/register_user.jsp");	
+		view.forward(request, response);
 		
 	}
 

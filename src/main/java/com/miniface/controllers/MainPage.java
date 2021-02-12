@@ -33,7 +33,6 @@ public class MainPage extends HttpServlet {
 		if (session.getAttribute("username") == null) {
 			response.sendRedirect("login");
 		} else {
-			
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/main.jsp");
 			view.forward(request, response);
 		}

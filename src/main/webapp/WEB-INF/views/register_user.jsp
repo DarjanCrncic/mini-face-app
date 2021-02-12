@@ -15,26 +15,27 @@
 		<form method="post" action="register">
 			<div class="form-group">
 				<label for="form-firstName">First Name</label> <input type="text"
-					class="form-control" name="form-firstName" placeholder="First Name">
+					class="form-control" name="form-firstName" placeholder="First Name" value="<%=request.getAttribute("form-firstName") %>">
 			</div>
 			<div class="form-group">
 				<label for="form-lastName">Last Name</label> <input type="text"
-					class="form-control" name="form-lastName" placeholder="Last Name">
+					class="form-control" name="form-lastName" placeholder="Last Name" value="<%=request.getAttribute("form-lastName") %>">
 			</div>
 			<div class="form-group">
 				<label for="form-username">Username</label> <input type="text"
-					class="form-control" name="form-username" placeholder="Username">
+					class="form-control" name="form-username" placeholder="Username" value="<%=request.getAttribute("form-username") %>">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Email address</label> <input
 					type="email" class="form-control" name="form-email"
-					aria-describedby="emailHelp" placeholder="Enter email"> <small
+					aria-describedby="emailHelp" placeholder="Enter email" value="<%=request.getAttribute("form-email") %>"> 
+					<small
 					id="emailHelp" class="form-text text-muted">We'll never
 					share your email with anyone else.</small>
 			</div>
 			<div class="form-group">
 				<label for="form-password">Password</label> <input type="password"
-					class="form-control" name="form-password" placeholder="Password">
+					class="form-control" name="form-password" placeholder="Password" value="<%=request.getAttribute("form-password") %>">
 			</div>
 			<button type="submit" class="btn btn-primary submit-button">Submit</button>
 

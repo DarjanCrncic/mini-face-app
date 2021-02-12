@@ -2,6 +2,7 @@ package com.miniface.controllers;
 
 import java.io.IOException;
 
+import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,13 +55,14 @@ public class LoginUser extends HttpServlet {
 
 			FaceUserServiceImpl fusi = new FaceUserServiceImpl();
 			errorMessages = new String[1];
-
-			if (fusi.loginFaceUser(username, password) == 1) {
+			JsonObject jsonUser = fusi.loginFaceUser(username, password);
+			
+			if (jsonUser != null) {
 				System.out.println("Successfully logged in!");
-
+			
 				// Create Session and add user information
 				HttpSession session = request.getSession();
-				session.setAttribute("username", username);
+				insertUserAttributes(session, jsonUser);
 				session.setMaxInactiveInterval(30 * 60);
 
 				// Create and add cookie
@@ -85,6 +87,13 @@ public class LoginUser extends HttpServlet {
 			view.forward(request, response);
 		}
 
+	}
+	
+	private void insertUserAttributes(HttpSession session, JsonObject jsonUser) {
+		session.setAttribute("username", jsonUser.get("USERNAME").toString().replaceAll("^\"|\"$", ""));
+		session.setAttribute("userID", jsonUser.get("ID"));
+		session.setAttribute("name", jsonUser.get("NAME").toString().replaceAll("^\"|\"$", ""));
+		session.setAttribute("surname", jsonUser.get("SURNAME").toString().replaceAll("^\"|\"$", ""));
 	}
 
 }

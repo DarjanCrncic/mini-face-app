@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 import org.apache.log4j.Logger;
 
 import com.miniface.daos.FaceUserDAOImpl;
@@ -40,16 +43,20 @@ public class FaceUserServiceImpl implements FaceUserService {
 	}
 
 	@Override
-	public int loginFaceUser(String username, String password) {
+	public JsonObject loginFaceUser(String username, String password) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet set = null;
-		int result = 0;
-		
+		JsonObject userJson = null;
+			
 		try { 
 			connection = ConnectionClass.getConnection();
 			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
-			result = fudao.login(username, password, connection, statement, set);
+			JsonArray jsonArray = fudao.login(username, password, connection, statement, set);
+			if(!jsonArray.isEmpty()) {
+				userJson = jsonArray.getJsonObject(0);
+			}
+			
 		} catch (SQLException ex) {
 			LOGGER.error("SQLxception in loginFaceUser", ex);
 		} finally {
@@ -57,7 +64,7 @@ public class FaceUserServiceImpl implements FaceUserService {
 			ConnectionClass.closePreparedStatement(statement);
 			ConnectionClass.closeConnection(connection);
 		}
-		return result;
+		return userJson;
 	}
 	
 }
