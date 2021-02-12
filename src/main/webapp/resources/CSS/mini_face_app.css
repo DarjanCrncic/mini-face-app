@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.register-form-div, .login-form-div, .main-body-div {
+	width: 30%;
+	padding: 30px;
+}
+
+.submit-button {
+	margin-top: 20px;
+}
+
+.copyright {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	color: gray;
+	text-align: center;
+}
+
+.error {
+	font-size: 1.5rem;
+	color: red;
+}
+
+.error-message-div{
+	margin-top: 20px;
+}
+
