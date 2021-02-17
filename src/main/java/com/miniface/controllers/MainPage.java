@@ -33,6 +33,10 @@ public class MainPage extends HttpServlet {
 		if (session.getAttribute("username") == null) {
 			response.sendRedirect("login");
 		} else {
+			//int userID = Integer.parseInt(session.getAttribute("userID").toString());
+			//FaceUserServiceImpl fusi = new FaceUserServiceImpl();
+			//JSONArray arr = fusi.showFriendsList(userID);
+			
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/main.jsp");
 			view.forward(request, response);
 		}
@@ -72,3 +76,15 @@ if (cookies != null) {
 	sessionID = session.getId(); // session id from url link
 }
 */
+
+////////////// create post test
+/*
+			FacePostEntity post = new FacePostEntity();
+			post.setTitle("LALA");
+			post.setBody("POOOO");
+			fusi.createPost(userID, post);
+ 
+*/
+
+///////////// test send friend request
+//fusi.sendFriendRequest(userID, "jozobozo");

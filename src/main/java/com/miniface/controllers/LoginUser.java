@@ -2,7 +2,6 @@ package com.miniface.controllers;
 
 import java.io.IOException;
 
-import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.miniface.services.FaceUserServiceImpl;
 import com.miniface.utils.Hasher;
@@ -35,6 +35,7 @@ public class LoginUser extends HttpServlet {
 
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/login_user.jsp");
 		request.setAttribute("errorMessages", null);
+		
 		view.forward(request, response);
 	}
 
@@ -55,7 +56,8 @@ public class LoginUser extends HttpServlet {
 
 			FaceUserServiceImpl fusi = new FaceUserServiceImpl();
 			errorMessages = new String[1];
-			JsonObject jsonUser = fusi.loginFaceUser(username, password);
+			JSONObject jsonUser = fusi.loginFaceUser(username, password);
+			
 			
 			if (jsonUser != null) {
 				System.out.println("Successfully logged in!");
@@ -89,9 +91,9 @@ public class LoginUser extends HttpServlet {
 
 	}
 	
-	private void insertUserAttributes(HttpSession session, JsonObject jsonUser) {
+	private void insertUserAttributes(HttpSession session, JSONObject jsonUser) {
 		session.setAttribute("username", jsonUser.get("USERNAME").toString().replaceAll("^\"|\"$", ""));
-		session.setAttribute("userID", jsonUser.get("ID"));
+		session.setAttribute("userID", jsonUser.get("ID").toString().replaceAll("^\"|\"$", ""));
 		session.setAttribute("name", jsonUser.get("NAME").toString().replaceAll("^\"|\"$", ""));
 		session.setAttribute("surname", jsonUser.get("SURNAME").toString().replaceAll("^\"|\"$", ""));
 	}

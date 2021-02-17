@@ -7,16 +7,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.miniface.controllers.RegisterUser;
 
@@ -87,26 +85,31 @@ public class ConnectionClass {
 		}
 	}
 
-	public static JsonArray parseResultSetAsJSON(ResultSet resultSet) {
+	public static JSONArray parseResultSetAsJSON(ResultSet resultSet) {
 		
-		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+		JSONArray jsonArray = new JSONArray();
 		try {
 			while(resultSet.next()) {
 				ResultSetMetaData metaData = resultSet.getMetaData();
 				int columnNumber = metaData.getColumnCount();
-				JsonObjectBuilder json = Json.createObjectBuilder();
+				JSONObject json = new JSONObject();
 				
-				for(int i=1; i<columnNumber; i++) {
+				for(int i=1; i<=columnNumber; i++) {
 					String columnName = metaData.getColumnName(i);
+									
 					switch(metaData.getColumnType(i)) {
-					case java.sql.Types.NUMERIC: json.add(columnName, resultSet.getInt(columnName)); break;
-					case java.sql.Types.VARCHAR: json.add(columnName, (resultSet.getString(columnName) == null) ? "" : resultSet.getString(columnName)); break;
-					case java.sql.Types.TIMESTAMP: json.add(columnName, (resultSet.getString(columnName) == null) ? "" : resultSet.getString(columnName)); break;
+					case java.sql.Types.NUMERIC: json.put(columnName, resultSet.getInt(columnName)); break;
+					case java.sql.Types.VARCHAR: json.put(columnName, (resultSet.getString(columnName) != null) ? resultSet.getString(columnName) : ""); break;
+					case java.sql.Types.TIMESTAMP: json.put(columnName, (resultSet.getTimestamp(columnName) != null) ? resultSet.getTimestamp(columnName).toString() : ""); break;
 
-					default: json.add(columnName, ""); break;
+					default: json.append(columnName, ""); break;
+					}
+					
+					if(resultSet.wasNull()) {
+						json.append(columnName, "");
 					}
 				}
-				jsonArrayBuilder.add(json.build());
+				jsonArray.put(json);
 			}
 		} catch (SQLException ex) {
 			LOGGER.error("SQLException in parseResultSetAsJSON", ex);
@@ -114,15 +117,16 @@ public class ConnectionClass {
 			ConnectionClass.closeResultSet(resultSet);
 		}
 
-		return jsonArrayBuilder.build();
+		return jsonArray;
 	}
 	
-	public static JsonArray executePreparedStatement(PreparedStatement statement) throws SQLException{
+	public static JSONArray executePreparedStatement(PreparedStatement statement) throws SQLException{
 		
 		ResultSet set = statement.executeQuery();
-		JsonArray arr = null;
+		JSONArray arr = null;
 		arr = parseResultSetAsJSON(set);
 		ConnectionClass.closePreparedStatement(statement);
+		set.close();
 		return arr;
 	}
 	

@@ -11,14 +11,36 @@
 		<servlet-name>MainPage</servlet-name>
 		<servlet-class>com.miniface.controllers.MainPage</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>Friends</display-name>
+		<servlet-name>Friends</servlet-name>
+		<servlet-class>com.miniface.ajax.Friends</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>JSONServlet</display-name>
+		<servlet-name>JSONServlet</servlet-name>
+		<servlet-class>com.miniface.controllers.JSONServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>MainPage</servlet-name>
 		<url-pattern>/MainPage</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Friends</servlet-name>
+		<url-pattern>/Friends</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>JSONServlet</servlet-name>
+		<url-pattern>/JSONServlet</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>LoginUser</welcome-file>
+		<welcome-file>login</welcome-file>
 	</welcome-file-list>
 
 	<resource-ref>

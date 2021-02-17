@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebListener;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import com.miniface.utils.QueryHolder;
+
 @WebListener("application context listener")
 public class ContextListener implements ServletContextListener {
  
@@ -19,7 +21,8 @@ public class ContextListener implements ServletContextListener {
         String fullPath = context.getRealPath("") + File.separator + log4jConfigFile;
          
         PropertyConfigurator.configure(fullPath);
-         
+        
+        QueryHolder.loadProperties();
     }
      
     @Override

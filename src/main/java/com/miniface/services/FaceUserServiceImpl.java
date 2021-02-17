@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.miniface.daos.FaceUserDAOImpl;
+import com.miniface.entities.FacePostEntity;
 import com.miniface.entities.FaceUserEntity;
 import com.miniface.utils.ConnectionClass;
 
@@ -32,7 +32,7 @@ public class FaceUserServiceImpl implements FaceUserService {
 			connection.commit();
 
 		} catch (SQLException ex) {
-			LOGGER.error("SQLxception in addFaceUser", ex);
+			LOGGER.error("SQLException in addFaceUser", ex);
 			ConnectionClass.doRollback(connection);
 		} finally {
 			ConnectionClass.closePreparedStatement(statement);
@@ -43,22 +43,22 @@ public class FaceUserServiceImpl implements FaceUserService {
 	}
 
 	@Override
-	public JsonObject loginFaceUser(String username, String password) {
+	public JSONObject loginFaceUser(String username, String password) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet set = null;
-		JsonObject userJson = null;
+		JSONObject userJson = null;
 			
 		try { 
 			connection = ConnectionClass.getConnection();
 			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
-			JsonArray jsonArray = fudao.login(username, password, connection, statement, set);
+			JSONArray jsonArray = fudao.login(username, password, connection, statement, set);
 			if(!jsonArray.isEmpty()) {
-				userJson = jsonArray.getJsonObject(0);
+				userJson = (JSONObject) jsonArray.get(0);
 			}
 			
 		} catch (SQLException ex) {
-			LOGGER.error("SQLxception in loginFaceUser", ex);
+			LOGGER.error("SQLException in loginFaceUser", ex);
 		} finally {
 			ConnectionClass.closeResultSet(set);
 			ConnectionClass.closePreparedStatement(statement);
@@ -66,5 +66,99 @@ public class FaceUserServiceImpl implements FaceUserService {
 		}
 		return userJson;
 	}
+
+	@Override
+	public int createPost(int userID, FacePostEntity post) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet set = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.createPost(userID, post, connection, statement, set);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in createPost", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int sendFriendRequest(int userID, String friendUsername) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet set = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.sendFriendRequest(userID, friendUsername, connection, statement, set);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in sendFriendRequest", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public JSONArray showFriendsList(int userID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet set = null;
+		JSONArray friendsJson = null;
+			
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			friendsJson = fudao.showFriendsList(userID, connection, statement, set);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in showFriendsList", ex);
+		} finally {
+			ConnectionClass.closeResultSet(set);
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return friendsJson;
+	}
+
+	@Override
+	public JSONArray showVissiblePosts(int userID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet set = null;
+		JSONArray vissiblePosts = null;
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			vissiblePosts = fudao.showVissiblePosts(userID, connection, statement, set);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in showVissiblePosts", ex);
+		} finally {
+			ConnectionClass.closeResultSet(set);
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return vissiblePosts;
+	}
+	
 	
 }

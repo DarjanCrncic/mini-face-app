@@ -5,13 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.json.JsonArray;
+import org.json.JSONArray;
 
+import com.miniface.entities.FacePostEntity;
 import com.miniface.entities.FaceUserEntity;
 
 public interface FaceUserDAO {
 	
-	public JsonArray login(String username, String password, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
+	public JSONArray login(String username, String password, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
 
-	public int register(FaceUserEntity t, Connection c, PreparedStatement s) throws SQLException;
+	public int register(FaceUserEntity user, Connection connection, PreparedStatement statement) throws SQLException;
+	
+	public int createPost(int userID, FacePostEntity post, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
+	
+	public int sendFriendRequest(int userID, String friendUsername, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
+	
+	public JSONArray showFriendsList(int userID, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
+	
+	public JSONArray showVissiblePosts(int userID, Connection connection, PreparedStatement statement, ResultSet set) throws SQLException;
+	
 }

@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
-.register-form-div, .login-form-div, .main-body-div {
+.register-form-div, .login-form-div {
 	width: 30%;
-	padding: 30px;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
 }
 
-.submit-button {
-	margin-top: 20px;
-}
 
 .copyright {
 	position: fixed;
@@ -18,12 +18,70 @@
 	text-align: center;
 }
 
-.error {
+/* register and login */
+
+.card{
+	display: flex;
+  	justify-content: center;
+}
+
+.card-header{
+	text-align: center;
 	font-size: 1.5rem;
+}
+
+.error {
+	font-size: 1.2rem;
 	color: red;
 }
 
 .error-message-div{
+	margin-top: 5px;
+}
+
+.submit-button-registration, .submit-button-login{
+	margin: 0;
+	width: 100%;
+}
+
+.move-button {
+	width: 49%;
+}
+
+
+
+/* main */
+
+#friendsTable{
 	margin-top: 20px;
 }
 
+#ajaxShowVissiblePosts{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 40px;
+}
+
+.main-body-div{
+	width: 95%;
+	margin-left: auto;
+}
+
+.nav-button{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	padding-top: 8px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.submit-button-logout{
+	margin-left: 10px;
+}
+
+#ajaxShowGreeting{
+	margin-top: 10%;
+}
