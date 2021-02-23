@@ -1,15 +1,15 @@
 package com.miniface.entities;
 
-import java.util.Date;
+import javax.validation.constraints.NotEmpty;
 
 public class FaceGroupEntity {
 	
+	@NotEmpty(message = "must enter group name")
 	private String name;
+	@NotEmpty(message = "must enter description")
 	private String description;
 	private int ownerId;
-	private Date creationTime;
-	private Date updateTime;
-	
+
 	// empty constructor
 	public FaceGroupEntity() {
 		super();
@@ -34,22 +34,9 @@ public class FaceGroupEntity {
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
-	public Date getCreationTime() {
-		return creationTime;
-	}
-	public void setCreationTime(Date creationTime) {
-		this.creationTime = creationTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "FaceGroup [name=" + name + ", description=" + description + ", ownerId=" + ownerId + ", creationTime="
-				+ creationTime + ", updateTime=" + updateTime + "]";
+		return "FaceGroup [name=" + name + ", description=" + description + ", ownerId=" + ownerId + "]";
 	}
 }

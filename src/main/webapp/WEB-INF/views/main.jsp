@@ -6,9 +6,8 @@
 <meta charset="UTF-8">
 <title>Home Page</title>
 
-<%@ include file="partials/header.jsp"%>
 <script src="js/libs/jquery-3.5.1.js" type="text/javascript"></script>
-
+<%@ include file="partials/header.jsp"%>
 
 </head>
 
@@ -33,25 +32,25 @@
 				<li class="nav-item"><button class="nav-link nav-button" id="showFriends" onclick="MainObject.navigationPage(this.id)">Friends</button></li>
 				
 				<li class="nav-item"><a class="nav-link" href="#">Groups</a></li>
+
+				<li class="nav-item dropdown">
+						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
+				</li>
 				
-				<li class="nav-item"><button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button></li>
 				
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> Actions </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Add Friend</a> <a
-							class="dropdown-item" href="#">Write Post</a> <a
-							class="dropdown-item" href="#">Something else here</a>
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Actions </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModalLong">Create Post</button> 
+						<a class="dropdown-item" href="#">Another action</a> 
+						<a class="dropdown-item" href="#">Something else here</a>
+
 					</div></li>
 
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
+
 			<a href="logout">
 				<button class="btn btn-secondary submit-button-logout">Logout</button>
 			</a>
@@ -62,6 +61,7 @@
 	<div id="secondary" class="container"></div>
 	<div id="tertiary" class="container"></div>
 
+	
 	<%@ include file="partials/footer.jsp"%>
 
 	<script src="js/fragments/main.js" type="text/javascript"></script>

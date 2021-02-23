@@ -34,6 +34,7 @@ public class ShowFriends extends JSONServlet {
 			json.put("message", "Transaction successful");
 			json.put("status", "success");
 			
+			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json.toString());
 		}else {
 			json.put("message", "Cant retrieve data");

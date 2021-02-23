@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.miniface.daos.FaceUserDAOImpl;
-import com.miniface.entities.FacePostEntity;
 import com.miniface.entities.FaceUserEntity;
 import com.miniface.utils.ConnectionClass;
 
@@ -68,31 +67,6 @@ public class FaceUserServiceImpl implements FaceUserService {
 	}
 
 	@Override
-	public int createPost(int userID, FacePostEntity post) {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet set = null;
-		int result = 0;
-		
-		try {
-			connection = ConnectionClass.getConnection();
-			connection.setAutoCommit(false);
-			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
-			result = fudao.createPost(userID, post, connection, statement, set);
-			connection.commit();
-
-		} catch (SQLException ex) {
-			LOGGER.error("SQLxception in createPost", ex);
-			ConnectionClass.doRollback(connection);
-		} finally {
-			ConnectionClass.closePreparedStatement(statement);
-			ConnectionClass.closeConnection(connection);
-		}
-		
-		return result;
-	}
-
-	@Override
 	public int sendFriendRequest(int userID, String friendUsername) {
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -138,27 +112,5 @@ public class FaceUserServiceImpl implements FaceUserService {
 		}
 		return friendsJson;
 	}
-
-	@Override
-	public JSONArray showVissiblePosts(int userID) {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet set = null;
-		JSONArray vissiblePosts = null;
-		try { 
-			connection = ConnectionClass.getConnection();
-			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
-			vissiblePosts = fudao.showVissiblePosts(userID, connection, statement, set);
-			
-		} catch (SQLException ex) {
-			LOGGER.error("SQLException in showVissiblePosts", ex);
-		} finally {
-			ConnectionClass.closeResultSet(set);
-			ConnectionClass.closePreparedStatement(statement);
-			ConnectionClass.closeConnection(connection);
-		}
-		return vissiblePosts;
-	}
-	
 	
 }

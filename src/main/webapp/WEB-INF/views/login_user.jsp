@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Login</title>
 
+<script src="js/libs/jquery-3.5.1.js" type="text/javascript"></script>
 <%@ include file="partials/header.jsp"%>
 
 </head>

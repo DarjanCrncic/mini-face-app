@@ -105,9 +105,6 @@ public class ConnectionClass {
 					default: json.append(columnName, ""); break;
 					}
 					
-					if(resultSet.wasNull()) {
-						json.append(columnName, "");
-					}
 				}
 				jsonArray.put(json);
 			}

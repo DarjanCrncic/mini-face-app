@@ -43,6 +43,10 @@ public class QueryHolder {
         SQL.CREATE_GROUP_REQUEST = properties.getProperty("createGroupRequest");
         SQL.GET_LIST_OF_FRIENDS = properties.getProperty("getListOfFriends");
         SQL.GET_VISSIBLE_POSTS = properties.getProperty("getVissiblePosts");
+        SQL.GET_POST_FROM_USER_BY_ID = properties.getProperty("getPostFromUserById");
+        SQL.DELETE_POST_BY_ID = properties.getProperty("deletePostById");
+        SQL.DELETE_POST_FROM_USER = properties.getProperty("deletePostFromUser");
+        SQL.EDIT_POST_BY_ID = properties.getProperty("editPostById");
     }
     
     public static class SQL {
@@ -59,5 +63,9 @@ public class QueryHolder {
         public static String FIND_USER_ID_BY_USERNAME;
         public static String GET_LIST_OF_FRIENDS;
         public static String GET_VISSIBLE_POSTS;
+        public static String GET_POST_FROM_USER_BY_ID;
+        public static String DELETE_POST_BY_ID;
+        public static String DELETE_POST_FROM_USER;
+        public static String EDIT_POST_BY_ID;
     }
 }

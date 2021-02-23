@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import org.json.JSONArray;
 
-import com.miniface.entities.FacePostEntity;
 import com.miniface.entities.FaceUserEntity;
 import com.miniface.utils.ConnectionClass;
 import com.miniface.utils.QueryHolder;
@@ -45,29 +44,7 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		return jsonArray;
 	}
 
-	@Override
-	public int createPost(int userID, FacePostEntity post, Connection connection, PreparedStatement statement,
-			ResultSet set) throws SQLException {
 
-		int result = 0;
-
-		statement = connection.prepareStatement(QueryHolder.SQL.CREATE_POST, new String[] { "ID" });
-		statement.setString(1, post.getTitle());
-		statement.setString(2, post.getBody());
-
-		statement.executeUpdate();
-		ResultSet generatedKeys = statement.getGeneratedKeys();
-
-		if (generatedKeys.next()) {
-			int postID = generatedKeys.getInt(1);
-			statement = connection.prepareStatement(QueryHolder.SQL.CONNECT_USER_TO_POST);
-			statement.setString(1, Integer.toString(userID));
-			statement.setString(2, Integer.toString(postID));
-			result = statement.executeUpdate();
-		}
-
-		return result;
-	}
 
 	@Override
 	public int sendFriendRequest(int userID, String friendUsername, Connection connection, PreparedStatement statement,
@@ -103,19 +80,13 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		return jsonArray;
 	}
 
-	@Override
-	public JSONArray showVissiblePosts(int userID, Connection connection, PreparedStatement statement, ResultSet set)
-			throws SQLException {
 
-		statement = connection.prepareStatement(QueryHolder.SQL.GET_VISSIBLE_POSTS);
-		statement.setString(1, Integer.toString(userID));
-		statement.setString(2, Integer.toString(userID));
-		statement.setString(3, Integer.toString(userID));
-		statement.setString(4, Integer.toString(userID));
-		JSONArray jsonArray = null;
-		jsonArray = ConnectionClass.executePreparedStatement(statement);
-		
-		return jsonArray;
-	}
 
 }
+
+
+
+
+
+
+

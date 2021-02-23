@@ -46,9 +46,9 @@ public class JSONServlet extends HttpServlet {
 		if (session == null || session.getAttribute("username") == null) {
 			json.put("message", "No session");
 			json.put("status", "error");
-			doGetNotLoggedIn(request, response, session, json);
+			doPostNotLoggedIn(request, response, session, json);
 		} else {
-			doGetLoggedIn(request, response, session, json);
+			doPostLoggedIn(request, response, session, json);
 		}
 
 	}

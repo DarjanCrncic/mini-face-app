@@ -8,7 +8,6 @@
 	margin-top: 5%;
 }
 
-
 .copyright {
 	position: fixed;
 	left: 0;
@@ -19,13 +18,12 @@
 }
 
 /* register and login */
-
-.card{
+.card {
 	display: flex;
-  	justify-content: center;
+	justify-content: center;
 }
 
-.card-header{
+.card-header {
 	text-align: center;
 	font-size: 1.5rem;
 }
@@ -35,11 +33,11 @@
 	color: red;
 }
 
-.error-message-div{
+.error-message-div {
 	margin-top: 5px;
 }
 
-.submit-button-registration, .submit-button-login{
+.submit-button-registration, .submit-button-login {
 	margin: 0;
 	width: 100%;
 }
@@ -48,23 +46,9 @@
 	width: 49%;
 }
 
-
-
 /* main */
-
-#friendsTable{
+#friendsTable {
 	margin-top: 20px;
-}
-
-#ajaxShowVissiblePosts{
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-left: 40px;
-}
-
-.main-body-div{
-	width: 95%;
-	margin-left: auto;
 }
 
 .nav-button{
@@ -78,10 +62,93 @@
 	outline: inherit;
 }
 
-.submit-button-logout{
+
+
+.post-title-username{
+	display: inline-block;
+}
+
+.submit-button-logout {
 	margin-left: 10px;
 }
 
-#ajaxShowGreeting{
+#ajaxShowGreeting {
 	margin-top: 10%;
 }
+
+/* post */
+.left-column {
+	margin-top: 20px;
+	padding-top: 4%;
+	float: left;
+	width: 60%;
+}
+
+.right-column {
+	margin-top: 20px;
+	float: left;
+	width: 40%;
+}
+
+#ajaxShowVissiblePosts {
+	margin-bottom: 20px;
+}
+
+.splitColumnsRow:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.search-button {
+	display: inline;
+	vertical-align: top;
+	width: 8%;
+	margin-right: 0.5%;
+	padding: 0.5%;
+	height: 3%;
+}
+
+.search-bar {
+	width: 60%;
+	display: inline;
+	margin-bottom: 5px;
+	margin-left: 0.5%;
+}
+
+.search-form {
+	margin-top: 10px;
+}
+
+.select2-container {
+	height: 15%;
+	vertical-align: top;
+}
+
+.select2-container--bootstrap {
+	height: 5%;
+}
+
+.new-post-div {
+	margin-top: 10%;
+	border: 2px solid #DCDCDC;
+	border-radius: .25rem;
+	width: 100%;
+	padding: 4px 16px 16px 16px;
+	background-color: #f2f9fa;
+}
+
+.delete-button, .edit-button{
+	background: white;
+	border: none;
+	vertical-align: 0;
+}
+
+/* friends */
+
+.mainFriendsTableRow{
+	color: white;
+	background-color: #007bff;
+}
+
+
