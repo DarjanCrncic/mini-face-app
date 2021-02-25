@@ -37,18 +37,7 @@
 						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
 				</li>
 				
-				
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#"
-					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> Actions </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModalLong">Create Post</button> 
-						<a class="dropdown-item" href="#">Another action</a> 
-						<a class="dropdown-item" href="#">Something else here</a>
-
-					</div></li>
-
+		
 			</ul>
 
 			<a href="logout">
@@ -65,5 +54,7 @@
 	<%@ include file="partials/footer.jsp"%>
 
 	<script src="js/fragments/main.js" type="text/javascript"></script>
+	<script src="js/fragments/FriendsPageObject.js" type="text/javascript"></script>
+	<script src="js/fragments/PostsPageObject.js" type="text/javascript"></script>
 </body>
 </html>

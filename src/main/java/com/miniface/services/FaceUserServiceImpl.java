@@ -2,7 +2,6 @@ package com.miniface.services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
@@ -45,13 +44,12 @@ public class FaceUserServiceImpl implements FaceUserService {
 	public JSONObject loginFaceUser(String username, String password) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet set = null;
 		JSONObject userJson = null;
 			
 		try { 
 			connection = ConnectionClass.getConnection();
 			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
-			JSONArray jsonArray = fudao.login(username, password, connection, statement, set);
+			JSONArray jsonArray = fudao.login(username, password, connection, statement);
 			if(!jsonArray.isEmpty()) {
 				userJson = (JSONObject) jsonArray.get(0);
 			}
@@ -59,7 +57,6 @@ public class FaceUserServiceImpl implements FaceUserService {
 		} catch (SQLException ex) {
 			LOGGER.error("SQLException in loginFaceUser", ex);
 		} finally {
-			ConnectionClass.closeResultSet(set);
 			ConnectionClass.closePreparedStatement(statement);
 			ConnectionClass.closeConnection(connection);
 		}
@@ -67,17 +64,16 @@ public class FaceUserServiceImpl implements FaceUserService {
 	}
 
 	@Override
-	public int sendFriendRequest(int userID, String friendUsername) {
+	public int sendFriendRequest(int userID, int friendID) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet set = null;
 		int result = 0;
 		
 		try {
 			connection = ConnectionClass.getConnection();
 			connection.setAutoCommit(false);
 			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
-			result = fudao.sendFriendRequest(userID, friendUsername, connection, statement, set);
+			result = fudao.sendFriendRequest(userID, friendID, connection, statement);
 			connection.commit();
 
 		} catch (SQLException ex) {
@@ -95,22 +91,84 @@ public class FaceUserServiceImpl implements FaceUserService {
 	public JSONArray showFriendsList(int userID) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet set = null;
 		JSONArray friendsJson = null;
 			
 		try { 
 			connection = ConnectionClass.getConnection();
 			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
-			friendsJson = fudao.showFriendsList(userID, connection, statement, set);
+			friendsJson = fudao.showFriendsList(userID, connection, statement);
 			
 		} catch (SQLException ex) {
 			LOGGER.error("SQLException in showFriendsList", ex);
 		} finally {
-			ConnectionClass.closeResultSet(set);
 			ConnectionClass.closePreparedStatement(statement);
 			ConnectionClass.closeConnection(connection);
 		}
 		return friendsJson;
+	}
+	
+	@Override
+	public JSONArray findOtherPeople(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		JSONArray othersJson = null;
+
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			othersJson = fudao.findOtherPeople(userID, filters, words, logicalOperand, wordPosition, connection, statement);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in findOtherPeople", ex);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return othersJson;
+	}
+
+	@Override
+	public JSONArray showFriendPendingRequests(int userID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		JSONArray allRequests = null;
+		
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			allRequests = fudao.showFriendPendingRequests(userID, connection, statement);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in findOtherPeople", ex);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return allRequests;
+	}
+	
+	@Override
+	public int updateFriendRequest(int friendID, int userID, String updateType) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.updateFriendRequest(friendID, userID, updateType, connection, statement);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in sendFriendRequest", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
 	}
 	
 }

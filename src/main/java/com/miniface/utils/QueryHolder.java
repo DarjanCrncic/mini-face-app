@@ -47,6 +47,10 @@ public class QueryHolder {
         SQL.DELETE_POST_BY_ID = properties.getProperty("deletePostById");
         SQL.DELETE_POST_FROM_USER = properties.getProperty("deletePostFromUser");
         SQL.EDIT_POST_BY_ID = properties.getProperty("editPostById");
+        SQL.GET_OTHER_PEOPLE = properties.getProperty("getOtherPeople");
+        SQL.GET_ALL_PENDING_REQUESTS = properties.getProperty("getAllPendingRequests");
+        SQL.UPDATE_FRIEND_REQUEST_STATUS = properties.getProperty("updateFriendRequestStatus");
+        SQL.ADD_TO_FRIENDS_TABLE = properties.getProperty("addToFriendsTable");
     }
     
     public static class SQL {
@@ -67,5 +71,9 @@ public class QueryHolder {
         public static String DELETE_POST_BY_ID;
         public static String DELETE_POST_FROM_USER;
         public static String EDIT_POST_BY_ID;
+        public static String GET_OTHER_PEOPLE;
+        public static String GET_ALL_PENDING_REQUESTS;
+        public static String UPDATE_FRIEND_REQUEST_STATUS;
+        public static String ADD_TO_FRIENDS_TABLE;
     }
 }

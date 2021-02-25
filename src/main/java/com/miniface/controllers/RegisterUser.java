@@ -77,6 +77,7 @@ public class RegisterUser extends HttpServlet {
 			if(result == 1) {
 				System.out.println("User added successfully");
 				response.sendRedirect("login");
+				return;
 			}else {
 				request.setAttribute("errorMessages", new String[] {"Registration failed, unique username and email required"});
 			}

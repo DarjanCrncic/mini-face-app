@@ -52,6 +52,7 @@ public class ShowPosts extends JSONServlet {
 		JSONArray filters = new JSONArray(jsonRequest.getJSONArray("searchParams"));
 		JSONArray words = new JSONArray(jsonRequest.getJSONArray("searchWords"));
 		String logicalOperand = new String(jsonRequest.getString("logicalOperand"));
+		String wordPosition = new String(jsonRequest.getString("wordPosition"));
 
 		FacePostServiceImpl fpsi = new FacePostServiceImpl();
 		JSONArray arr = null;
@@ -59,7 +60,7 @@ public class ShowPosts extends JSONServlet {
 		if (words.get(0).toString().isBlank() || words.get(0).toString().isEmpty()) {
 			arr = fpsi.showVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")));
 		} else {
-			arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand);
+			arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand, wordPosition);
 		}
 
 		if (!arr.isEmpty() && arr.length()>0) {

@@ -2,12 +2,12 @@ package com.miniface.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.json.JSONArray;
 
 import com.miniface.entities.FaceUserEntity;
+import com.miniface.utils.ConcatSQLSearch;
 import com.miniface.utils.ConnectionClass;
 import com.miniface.utils.QueryHolder;
 
@@ -29,8 +29,7 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 	}
 
 	@Override
-	public JSONArray login(String username, String password, Connection connection, PreparedStatement statement,
-			ResultSet set) throws SQLException {
+	public JSONArray login(String username, String password, Connection connection, PreparedStatement statement) throws SQLException {
 
 		statement = connection.prepareStatement(QueryHolder.SQL.LOGIN_USER);
 		statement.setString(1, username);
@@ -47,29 +46,21 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 
 
 	@Override
-	public int sendFriendRequest(int userID, String friendUsername, Connection connection, PreparedStatement statement,
-			ResultSet set) throws SQLException {
+	public int sendFriendRequest(int userID, int friendID, Connection connection, PreparedStatement statement) throws SQLException {
 
 		int result = 0;
 
-		statement = connection.prepareStatement(QueryHolder.SQL.FIND_USER_ID_BY_USERNAME);
-		statement.setString(1, friendUsername);
-		set = statement.executeQuery();
-
-		if (set.next()) {
-			int friendID = set.getInt(1);
-
-			statement = connection.prepareStatement(QueryHolder.SQL.CREATE_FRIEND_REQUEST);
-			statement.setString(1, Integer.toString(userID));
-			statement.setString(2, Integer.toString(friendID));
-			statement.setString(3, "1");
-			result = statement.executeUpdate();
-		}
+		statement = connection.prepareStatement(QueryHolder.SQL.CREATE_FRIEND_REQUEST);
+		statement.setString(1, Integer.toString(userID));
+		statement.setString(2, Integer.toString(friendID));
+		statement.setString(3, "1");
+		result = statement.executeUpdate();
+		
 		return result;
 	}
 
 	@Override
-	public JSONArray showFriendsList(int userID, Connection connection, PreparedStatement statement, ResultSet set)  throws SQLException{
+	public JSONArray showFriendsList(int userID, Connection connection, PreparedStatement statement)  throws SQLException{
 		
 		statement = connection.prepareStatement(QueryHolder.SQL.GET_LIST_OF_FRIENDS);
 		statement.setString(1, Integer.toString(userID));
@@ -79,8 +70,62 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 
 		return jsonArray;
 	}
+	
+	@Override
+	public JSONArray findOtherPeople(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, Connection connection, PreparedStatement statement) throws SQLException{
+		
+		String[] caseAll = { "SURNAME", "NAME" };
+		
+		if(words.get(0).toString().isBlank()) {
+			statement = connection.prepareStatement(QueryHolder.SQL.GET_OTHER_PEOPLE);
+		}else {
+			statement = connection.prepareStatement(ConcatSQLSearch.concatenate(QueryHolder.SQL.GET_OTHER_PEOPLE, filters, words, logicalOperand, wordPosition, caseAll));
+		}
+		statement.setString(1, Integer.toString(userID));
+		statement.setString(2, Integer.toString(userID));
+		statement.setString(3, Integer.toString(userID));
+		
+		JSONArray jsonArray = null;
+		jsonArray = ConnectionClass.executePreparedStatement(statement);
+		return jsonArray;
+	}
+	
+	@Override
+	public JSONArray showFriendPendingRequests(int userID, Connection connection, PreparedStatement statement) throws SQLException {
 
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_ALL_PENDING_REQUESTS);
+		statement.setString(1, Integer.toString(userID));
+		JSONArray jsonArray = null;
+		jsonArray = ConnectionClass.executePreparedStatement(statement);
 
+		return jsonArray;
+	}
+	
+	@Override
+	public int updateFriendRequest(int friendID, int userID, String updateType, Connection connection, PreparedStatement statement) throws SQLException{
+		
+		int result = 0;
+		statement = connection.prepareStatement(QueryHolder.SQL.UPDATE_FRIEND_REQUEST_STATUS);
+		if(updateType.equals("accept")) {
+			statement.setString(1, "2");
+		}
+		if(updateType.equals("decline")) {
+			statement.setString(1, "3");
+		}
+		statement.setString(2, Integer.toString(friendID));
+		statement.setString(3, Integer.toString(userID));
+		result = statement.executeUpdate();
+		
+		if(result > 0 && updateType.equals("accept")) {
+			result = 0;
+			statement = connection.prepareStatement(QueryHolder.SQL.ADD_TO_FRIENDS_TABLE);
+			statement.setString(1, Integer.toString(friendID));
+			statement.setString(2, Integer.toString(userID));
+			result = statement.executeUpdate();
+		}
+		
+		return result;
+	}
 
 }
 

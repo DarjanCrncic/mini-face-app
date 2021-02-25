@@ -47,9 +47,6 @@
 }
 
 /* main */
-#friendsTable {
-	margin-top: 20px;
-}
 
 .nav-button{
 	background: none;
@@ -79,7 +76,6 @@
 /* post */
 .left-column {
 	margin-top: 20px;
-	padding-top: 4%;
 	float: left;
 	width: 60%;
 }
@@ -131,24 +127,88 @@
 
 .new-post-div {
 	margin-top: 10%;
-	border: 2px solid #DCDCDC;
+	border: 1px solid #DCDCDC;
 	border-radius: .25rem;
 	width: 100%;
 	padding: 4px 16px 16px 16px;
-	background-color: #f2f9fa;
+	background-color: #f8f9fa;
 }
 
 .delete-button, .edit-button{
-	background: white;
+	background-color: transparent;
 	border: none;
 	vertical-align: 0;
+	display: inline;
 }
+
+.button-div{
+	float: right;
+}
+
+.datetime{
+	display: inline;
+	font-size: 1rem;
+	vertical-align: middle;
+}
+
+.posterName{
+	display: inline;
+	float: left;
+}
+
+.post-card-header {
+	text-align: right;
+}
+
 
 /* friends */
 
 .mainFriendsTableRow{
-	color: white;
-	background-color: #007bff;
+	background-color: rgba(0,0,0,.03);
 }
+
+.blue-titles {
+	color: #007bff;
+	font-size: 2rem;
+	margin-top: 20px;
+}
+
+.card{
+	width: 80%;
+	margin-left: 5%;
+	margin-top: 30px;
+}
+
+.request-button{
+	float: right;
+}
+
+.friendReqButtonsDiv{
+	display: inline;
+	float: right;
+	vertical-align: middle;
+}
+
+.friendReqDiv{
+	/*width: 80%;*/
+	height: 3rem;
+	border-top: 1px solid #ced4da;
+	border-bottom: 1px solid #ced4da;
+	padding: 0.2rem 0.2rem 0 0.6rem;
+
+	margin-top: 0.5rem;
+	position: relative;
+	background-color: rgba(0,0,0,.03);
+	
+}
+
+.requestMessage{
+	display:inline;
+	margin-top: 0.2rem;
+	vertical-align: middle;
+	font-size: 1.3em;
+	position: absolute;
+}
+
 
 

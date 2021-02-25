@@ -123,7 +123,6 @@ public class ConnectionClass {
 		JSONArray arr = null;
 		arr = parseResultSetAsJSON(set);
 		ConnectionClass.closePreparedStatement(statement);
-		set.close();
 		return arr;
 	}
 	
