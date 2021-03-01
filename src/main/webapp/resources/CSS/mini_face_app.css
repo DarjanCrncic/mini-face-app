@@ -134,7 +134,7 @@
 	background-color: #f8f9fa;
 }
 
-.delete-button, .edit-button{
+.delete-button, .edit-button, .like-button{
 	background-color: transparent;
 	border: none;
 	vertical-align: 0;
@@ -183,14 +183,13 @@
 	float: right;
 }
 
-.friendReqButtonsDiv{
+.friendReqButtonsDiv, .groupReqButtonsDiv{
 	display: inline;
 	float: right;
 	vertical-align: middle;
 }
 
 .friendReqDiv{
-	/*width: 80%;*/
 	height: 3rem;
 	border-top: 1px solid #ced4da;
 	border-bottom: 1px solid #ced4da;
@@ -210,5 +209,20 @@
 	position: absolute;
 }
 
+/* groups */
 
+.view-button{
+	float: right;
+}
 
+.table td{
+	vertical-align: middle;
+}
+
+.button-td{
+	padding: 0.3rem;
+}
+
+#editGroupInfoButton{
+	margin-left: 10px;
+}

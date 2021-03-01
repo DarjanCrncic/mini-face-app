@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Home Page</title>
 
-<script src="js/libs/jquery-3.5.1.js" type="text/javascript"></script>
+
 <%@ include file="partials/header.jsp"%>
 
 </head>
@@ -31,7 +31,7 @@
 				
 				<li class="nav-item"><button class="nav-link nav-button" id="showFriends" onclick="MainObject.navigationPage(this.id)">Friends</button></li>
 				
-				<li class="nav-item"><a class="nav-link" href="#">Groups</a></li>
+				<li class="nav-item"><button class="nav-link nav-button" id="showGroups" onclick="MainObject.navigationPage(this.id)">Groups</button></li>
 
 				<li class="nav-item dropdown">
 						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
@@ -53,8 +53,6 @@
 	
 	<%@ include file="partials/footer.jsp"%>
 
-	<script src="js/fragments/main.js" type="text/javascript"></script>
-	<script src="js/fragments/FriendsPageObject.js" type="text/javascript"></script>
-	<script src="js/fragments/PostsPageObject.js" type="text/javascript"></script>
+
 </body>
 </html>

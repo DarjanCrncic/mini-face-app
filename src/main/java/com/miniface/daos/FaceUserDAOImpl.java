@@ -74,12 +74,13 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 	@Override
 	public JSONArray findOtherPeople(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, Connection connection, PreparedStatement statement) throws SQLException{
 		
-		String[] caseAll = { "SURNAME", "NAME" };
+		String[] caseAll = { "FU.SURNAME", "FU.NAME" };
 		
 		if(words.get(0).toString().isBlank()) {
-			statement = connection.prepareStatement(QueryHolder.SQL.GET_OTHER_PEOPLE);
+			statement = connection.prepareStatement(QueryHolder.SQL.GET_OTHER_PEOPLE.replaceAll("%placeholder%", ""));
 		}else {
-			statement = connection.prepareStatement(ConcatSQLSearch.concatenate(QueryHolder.SQL.GET_OTHER_PEOPLE, filters, words, logicalOperand, wordPosition, caseAll));
+			String placeholder = ConcatSQLSearch.createSQLQueryAddition("and", filters, words, logicalOperand, wordPosition, caseAll);
+			statement = connection.prepareStatement(QueryHolder.SQL.GET_OTHER_PEOPLE.replaceAll("%placeholder%", placeholder));
 		}
 		statement.setString(1, Integer.toString(userID));
 		statement.setString(2, Integer.toString(userID));
@@ -93,7 +94,7 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 	@Override
 	public JSONArray showFriendPendingRequests(int userID, Connection connection, PreparedStatement statement) throws SQLException {
 
-		statement = connection.prepareStatement(QueryHolder.SQL.GET_ALL_PENDING_REQUESTS);
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_ALL_FRIEND_PENDING_REQUESTS);
 		statement.setString(1, Integer.toString(userID));
 		JSONArray jsonArray = null;
 		jsonArray = ConnectionClass.executePreparedStatement(statement);
@@ -125,6 +126,16 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public JSONArray showGroupPendingRequsts(int userID, Connection connection, PreparedStatement statement) throws SQLException{
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_ALL_GROUP_PENDING_REQUESTS);
+		statement.setString(1, Integer.toString(userID));
+		JSONArray jsonArray = null;
+		jsonArray = ConnectionClass.executePreparedStatement(statement);
+
+		return jsonArray;
 	}
 
 }

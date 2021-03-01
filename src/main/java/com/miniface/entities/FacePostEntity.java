@@ -9,6 +9,7 @@ public class FacePostEntity {
 	@NotEmpty(message = "must enter body")
 	private String body;
 	
+	
 	//empty constructor
 	public FacePostEntity() {
 		super();

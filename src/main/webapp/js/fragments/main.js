@@ -50,7 +50,7 @@ const MainObject = {
 	},
 
 	navigationPage: function(id) {
-		MainObject.loadPrimary("html/fragments/" + id + ".html", false);
+		MainObject.loadPrimary("html/fragments/" + id + ".html", true);
 	},
 
 	findMaxIdInClass: function(className) {
@@ -62,7 +62,7 @@ const MainObject = {
 			}
 		});
 		return parseInt(max);
-	}
+	},
 	
 }
 

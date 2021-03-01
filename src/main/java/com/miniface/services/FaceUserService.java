@@ -20,6 +20,8 @@ public interface FaceUserService {
 	public JSONArray showFriendPendingRequests(int userID);
 
 	public int updateFriendRequest(int friendID, int userID, String updateType);
+
+	public JSONArray showGroupPendingRequsts(int userID);
 	
 	
 }

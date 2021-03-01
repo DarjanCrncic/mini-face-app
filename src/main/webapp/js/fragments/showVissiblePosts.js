@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$("#select-dropdown_0").select2({
 		theme: "bootstrap",
 		placeholder: "Select Advanced Filters",
-		data: [{ id: "all", text: "All" }, { id: "title", text: "Title" }, { id: "body", text: "Body" }, { id: "name", text: "Posted By" }]
+		data: [{ id: "all", text: "All" }, { id: "fp.title", text: "Title" }, { id: "fp.body", text: "Body" }, { id: "fu.name+fu.surname", text: "Posted By" }]
 	});
 
 	$("#select-logical-operand").select2({
@@ -18,12 +18,12 @@ $(document).ready(function() {
 		data: [{ id: "both", text: "Every position " }, { id: "front", text: "Starting with" }, { id: "back", text: "Ending with" }]
 	});
 	
-	addFilters([{ id: "all", text: "All" }, { id: "title", text: "Title" }, { id: "body", text: "Body" }, {id: "name", text: "Posted By"}]);
+	addFilters([{ id: "all", text: "All" }, { id: "fp.title", text: "Title" }, { id: "fp.body", text: "Body" }, {id: "fu.name+fu.surname", text: "Posted By"}]);
 	prepareExecuteSearch(postSuccessFunction, 'ShowPosts');
 	
-	PostsPageObject.showAllVissiblePosts();
+	PostsPageObject.showAllVissiblePosts("all", 0);
 
-	PostsPageObject.createPostScriptInit();
+	PostsPageObject.createPostScriptInit("user", 0);
 
 	PostsPageObject.editPostScriptInit();
 	

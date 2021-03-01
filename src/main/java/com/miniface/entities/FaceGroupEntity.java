@@ -1,6 +1,7 @@
 package com.miniface.entities;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class FaceGroupEntity {
 	
@@ -8,6 +9,7 @@ public class FaceGroupEntity {
 	private String name;
 	@NotEmpty(message = "must enter description")
 	private String description;
+	@NotNull(message = "must have an owner")
 	private int ownerId;
 
 	// empty constructor

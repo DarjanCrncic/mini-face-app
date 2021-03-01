@@ -23,5 +23,7 @@ public interface FaceUserDAO {
 	public JSONArray showFriendPendingRequests(int userID, Connection connection, PreparedStatement statement) throws SQLException;
 
 	public int updateFriendRequest(int friendID, int userID, String updateType, Connection connection, PreparedStatement statement) throws SQLException;
+
+	public JSONArray showGroupPendingRequsts(int userID, Connection connection, PreparedStatement statement) throws SQLException;
 	
 }

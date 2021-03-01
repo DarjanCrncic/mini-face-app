@@ -139,7 +139,7 @@ public class FaceUserServiceImpl implements FaceUserService {
 			allRequests = fudao.showFriendPendingRequests(userID, connection, statement);
 			
 		} catch (SQLException ex) {
-			LOGGER.error("SQLException in findOtherPeople", ex);
+			LOGGER.error("SQLException in showFriendPendingRequests", ex);
 		} finally {
 			ConnectionClass.closePreparedStatement(statement);
 			ConnectionClass.closeConnection(connection);
@@ -161,7 +161,7 @@ public class FaceUserServiceImpl implements FaceUserService {
 			connection.commit();
 
 		} catch (SQLException ex) {
-			LOGGER.error("SQLxception in sendFriendRequest", ex);
+			LOGGER.error("SQLxception in updateFriendRequest", ex);
 			ConnectionClass.doRollback(connection);
 		} finally {
 			ConnectionClass.closePreparedStatement(statement);
@@ -169,6 +169,26 @@ public class FaceUserServiceImpl implements FaceUserService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public JSONArray showGroupPendingRequsts(int userID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		JSONArray allRequests = null;
+		
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			allRequests = fudao.showGroupPendingRequsts(userID, connection, statement);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in showGroupPendingRequsts", ex);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return allRequests;
 	}
 	
 }
