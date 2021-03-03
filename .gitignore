@@ -24,3 +24,8 @@ context.xml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/src/main/webapp/js/libs/fontAwesome/sprites
+/src/main/webapp/js/libs/fontAwesome/svgs/brands
+/src/main/webapp/js/libs/fontAwesome/svgs/regular
+/src/main/webapp/js/libs/fontAwesome/svgs/solid
+/src/main/webapp/js/libs/fontAwesome

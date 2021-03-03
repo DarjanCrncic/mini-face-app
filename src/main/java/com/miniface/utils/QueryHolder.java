@@ -59,6 +59,13 @@ public class QueryHolder {
         SQL.UPDATE_GROUP_REQUEST_STATUS = properties.getProperty("updateGroupRequestStatus");
         SQL.SHOW_POSTS_FOR_GROUP = properties.getProperty("showPostsForGroup");
         SQL.EDIT_GROUP = properties.getProperty("editGroup");
+        SQL.LIKE_POST = properties.getProperty("likePost");
+        SQL.CREATE_COMMENT = properties.getProperty("createComment");
+        SQL.GET_COMMENTS_FOR_POST = properties.getProperty("getCommentsForPost");
+        SQL.GET_LIKES_FOR_COMMENT = properties.getProperty("getLikesForComment");
+        SQL.GET_LIKES_FOR_POST = properties.getProperty("getLikesForPost");
+        SQL.LIKE_COMMENT = properties.getProperty("likeComment");
+        SQL.DELETE_COMMENT = properties.getProperty("deleteComment");
     }
     
     public static class SQL {
@@ -91,6 +98,13 @@ public class QueryHolder {
         public static String UPDATE_GROUP_REQUEST_STATUS;
         public static String SHOW_POSTS_FOR_GROUP;
         public static String EDIT_GROUP;
+        public static String LIKE_POST;
+        public static String LIKE_COMMENT;
+        public static String CREATE_COMMENT;
+        public static String GET_COMMENTS_FOR_POST;
+        public static String GET_LIKES_FOR_POST;
+        public static String GET_LIKES_FOR_COMMENT;
+        public static String DELETE_COMMENT;
        
     }
 }
