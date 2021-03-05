@@ -47,8 +47,7 @@
 }
 
 /* main */
-
-.nav-button{
+.nav-button {
 	background: none;
 	color: inherit;
 	border: none;
@@ -59,9 +58,7 @@
 	outline: inherit;
 }
 
-
-
-.post-title-username{
+.post-title-username {
 	display: inline-block;
 }
 
@@ -117,12 +114,15 @@
 }
 
 .select2-container {
-	height: 15%;
 	vertical-align: top;
 }
 
-.select2-container--bootstrap {
-	height: 5%;
+.select2-selection--single{
+	padding-top: 8px !important;	
+}
+
+.select2-selection {
+  height: 38px !important;
 }
 
 .new-post-div {
@@ -134,24 +134,24 @@
 	background-color: #f8f9fa;
 }
 
-.delete-button, .edit-button, .like-button{
+.delete-button, .edit-button, .like-button {
 	background-color: transparent;
 	border: none;
 	vertical-align: 0;
 	display: inline;
 }
 
-.button-div{
+.button-div {
 	float: right;
 }
 
-.datetime{
+.datetime {
 	display: inline;
 	font-size: 1rem;
 	vertical-align: middle;
 }
 
-.posterName{
+.posterName {
 	display: inline;
 	float: left;
 }
@@ -160,17 +160,17 @@
 	text-align: right;
 }
 
-.commentPoster{
+.commentPoster {
 	font-size: 1rem;
 	color: #007bff;
 	margin-bottom: 0.25rem;
 }
 
-.commentText{
+.commentText {
 	font-size: 1rem;
 }
 
-.viewCommentsButton{
+.viewCommentsButton {
 	margin-bottom: 0.25rem;
 	color: gray;
 	background: none;
@@ -182,14 +182,13 @@
 	outline: inherit;
 }
 
-.viewCommentsDiv{
+.viewCommentsDiv {
 	display: none;
 }
 
 /* friends */
-
-.mainFriendsTableRow{
-	background-color: rgba(0,0,0,.03);
+.mainFriendsTableRow {
+	background-color: rgba(0, 0, 0, .03);
 }
 
 .blue-titles {
@@ -198,36 +197,34 @@
 	margin-top: 20px;
 }
 
-.card{
+.card {
 	width: 80%;
 	margin-left: 5%;
 	margin-top: 30px;
 }
 
-.request-button{
+.request-button {
 	float: right;
 }
 
-.friendReqButtonsDiv, .groupReqButtonsDiv{
+.friendReqButtonsDiv, .groupReqButtonsDiv {
 	display: inline;
 	float: right;
 	vertical-align: middle;
 }
 
-.friendReqDiv{
+.friendReqDiv {
 	height: 3rem;
 	border-top: 1px solid #ced4da;
 	border-bottom: 1px solid #ced4da;
 	padding: 0.2rem 0.2rem 0 0.6rem;
-
 	margin-top: 0.5rem;
 	position: relative;
-	background-color: rgba(0,0,0,.03);
-	
+	background-color: rgba(0, 0, 0, .03);
 }
 
-.requestMessage{
-	display:inline;
+.requestMessage {
+	display: inline;
 	margin-top: 0.2rem;
 	vertical-align: middle;
 	font-size: 1.3em;
@@ -235,19 +232,57 @@
 }
 
 /* groups */
-
-.view-button{
+.view-button {
 	float: right;
 }
 
-.table td{
+.table td {
 	vertical-align: middle;
 }
 
-.button-td{
+.button-td {
 	padding: 0.3rem;
 }
 
-#editGroupInfoButton{
+#editGroupInfoButton {
 	margin-left: 10px;
+}
+
+/* profile page */
+
+#profilePageTitle{
+	color: #007bff;
+	font-size: 2rem;
+	margin: 3% 0 3% 3%; 
+}
+
+.fileInputContainer{
+	padding: none;
+	margin: 1% 0 1% 0;
+}
+
+.profileImage{
+	width: 300px; 
+	height: 300px;
+}
+
+.left-column-profile {
+	float: left;
+	width: 30%;
+}
+
+.right-column-profile {
+	float: left;
+	width: 60%;
+}
+
+.blue-titles-profile {
+	display: inline;
+	color: #007bff;
+	font-size: 1.2rem;
+}
+.black-titles-profile{
+	display: inline;
+	float: right;
+	font-size: 1.2rem;
 }

@@ -36,7 +36,6 @@ public class ShowPosts extends JSONServlet {
 		if(type.equals("group") && groupID != null) 
 			arr = fpsi.showVissiblePostsForGroup(Integer.parseInt(groupID));
 		
-
 		if (!arr.isEmpty() && arr != null) {
 			json.put("data", arr);
 			json.put("message", "Transaction successful");
@@ -61,17 +60,18 @@ public class ShowPosts extends JSONServlet {
 		JSONArray words = new JSONArray(jsonRequest.getJSONArray("searchWords"));
 		String logicalOperand = new String(jsonRequest.getString("logicalOperand"));
 		String wordPosition = new String(jsonRequest.getString("wordPosition"));
-
+		int pageNumber = jsonRequest.getInt("pageNumber"); 
+		int rowNumber = jsonRequest.getInt("rowNumber");
 		FacePostServiceImpl fpsi = new FacePostServiceImpl();
-		JSONArray arr = null;
+		JSONArray arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand, wordPosition, pageNumber, rowNumber);
 
-		if (words.get(0).toString().isBlank() || words.get(0).toString().isEmpty()) {
-			arr = fpsi.showVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")));
-		} else {
-			arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand, wordPosition);
-		}
-
-		if (!arr.isEmpty() && arr.length() > 0) {
+		if(!arr.isEmpty() && arr.length() > 0){
+			if(arr.length() == rowNumber+1) {
+				arr.remove(rowNumber);
+				json.put("more", true);
+			}else {
+				json.put("more", false);
+			}	
 			json.put("data", arr);
 			json.put("message", "Transaction successful");
 			json.put("status", "success");

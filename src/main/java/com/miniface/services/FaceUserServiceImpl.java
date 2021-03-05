@@ -1,5 +1,6 @@
 package com.miniface.services;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 
 import com.miniface.daos.FaceUserDAOImpl;
 import com.miniface.entities.FaceUserEntity;
+import com.miniface.entities.InfoEntity;
 import com.miniface.utils.ConnectionClass;
 
 public class FaceUserServiceImpl implements FaceUserService {
@@ -189,6 +191,74 @@ public class FaceUserServiceImpl implements FaceUserService {
 			ConnectionClass.closeConnection(connection);
 		}
 		return allRequests;
+	}
+	
+	@Override
+	public int updateImage(int userID, InputStream inputStream) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.updateImage(userID, inputStream, connection, statement);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in updateImage", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public InfoEntity getUserInfo(int userID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		InfoEntity infoEntity = null;
+		
+		try { 
+			connection = ConnectionClass.getConnection();
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();
+			infoEntity = fudao.getUserInfo(userID, connection, statement);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in getUserInfo", ex);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return infoEntity;
+	}
+	
+	@Override
+	public int updateInfo(int userID, String username, String country, String city, String age, String gender) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.updateInfo(userID, username, country, city, age, gender, connection, statement);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in updateInfo", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
 	}
 	
 }

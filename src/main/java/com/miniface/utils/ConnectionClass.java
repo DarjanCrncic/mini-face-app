@@ -101,7 +101,7 @@ public class ConnectionClass {
 					case java.sql.Types.NUMERIC: json.put(columnName, resultSet.getInt(columnName)); break;
 					case java.sql.Types.VARCHAR: json.put(columnName, (resultSet.getString(columnName) != null) ? resultSet.getString(columnName) : ""); break;
 					case java.sql.Types.TIMESTAMP: json.put(columnName, (resultSet.getTimestamp(columnName) != null) ? resultSet.getTimestamp(columnName).toString() : ""); break;
-
+					case java.sql.Types.BLOB: json.put(columnName, (resultSet.getBlob(columnName) != null) ? resultSet.getBlob(columnName).toString() : ""); break;
 					default: json.append(columnName, ""); break;
 					}
 					

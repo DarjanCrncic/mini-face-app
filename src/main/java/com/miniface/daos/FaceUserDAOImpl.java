@@ -1,12 +1,15 @@
 package com.miniface.daos;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.json.JSONArray;
 
 import com.miniface.entities.FaceUserEntity;
+import com.miniface.entities.InfoEntity;
 import com.miniface.utils.ConcatSQLSearch;
 import com.miniface.utils.ConnectionClass;
 import com.miniface.utils.QueryHolder;
@@ -136,6 +139,61 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		jsonArray = ConnectionClass.executePreparedStatement(statement);
 
 		return jsonArray;
+	}
+	
+	@Override
+	public int updateImage(int userID, InputStream inputStream, Connection connection, PreparedStatement statement) throws SQLException {
+		
+		int result = 0;
+		statement = connection.prepareStatement(QueryHolder.SQL.UPDATE_USER_IMAGE);
+		statement.setBlob(1, inputStream);
+		statement.setString(2, Integer.toString(userID));
+		
+		result = statement.executeUpdate();
+		return result;
+	}
+	
+	
+	@Override
+	public InfoEntity getUserInfo(int userID, Connection connection, PreparedStatement statement) throws SQLException {
+		
+		InfoEntity infoEntity = new InfoEntity();
+		
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_USER_INFO);
+		statement.setString(1, Integer.toString(userID));
+		ResultSet set = statement.executeQuery();
+		
+		if(set.next()) {
+			infoEntity.setBlob(set.getBlob("IMAGE"));
+			if(set.getBlob("IMAGE")==null) {
+				infoEntity.setImage(null);
+			}else {
+				infoEntity.setImage(set.getBlob("IMAGE").getBinaryStream());
+			}
+			infoEntity.setAge(set.getInt("AGE"));
+			infoEntity.setCity(set.getString("CITY"));
+			infoEntity.setCountry(set.getString("COUNTRY"));
+			infoEntity.setName(set.getString("NAME"));
+			infoEntity.setGender(set.getString("GENDER"));
+			infoEntity.setUsername(set.getString("USERNAME"));
+		}
+		
+		return infoEntity;
+	}
+	
+	@Override
+	public int updateInfo(int userID, String username, String country, String city, String age, String gender, Connection connection, PreparedStatement statement) throws SQLException{
+		int result = 0;
+		statement = connection.prepareStatement(QueryHolder.SQL.UPDATE_USER_INFO);
+		statement.setString(1, username);
+		statement.setString(2, country);
+		statement.setString(3, city);
+		statement.setString(4, age);
+		statement.setString(5, gender);		
+		statement.setString(6, Integer.toString(userID));
+				
+		result = statement.executeUpdate();
+		return result;
 	}
 
 }

@@ -15,7 +15,7 @@
 <body onload="MainObject.navigationPage('homePage')">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">MiniFace</a>
+		<a class="navbar-brand" href="#" style="color: #007bff;">MiniFace</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -33,16 +33,21 @@
 				
 				<li class="nav-item"><button class="nav-link nav-button" id="showGroups" onclick="MainObject.navigationPage(this.id)">Groups</button></li>
 
-				<li class="nav-item dropdown">
+				<li class="nav-item">
 						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
 				</li>
 				
 		
 			</ul>
+		<div class="dropdown">
+			<a id="nameDropdown" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+        	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          		<a class="dropdown-item" href="#" id="profilePage" onclick="MainObject.navigationPage(this.id)">View Profile</a>
+         		<a class="dropdown-item" href="logout">Logout</a>
+         	</div>
+		</div>	
+		
 
-			<a href="logout">
-				<button class="btn btn-secondary submit-button-logout">Logout</button>
-			</a>
 		</div>
 	</nav>
 

@@ -1,7 +1,14 @@
 function prepareExecuteSearch(successFunction, backendURL) {
 
 	$("#search").on('click', function() {
+		searchFunction(successFunction, backendURL, 1, PostsPageObject.rowNumber);
+		PostsPageObject.pageNumber = 1;
+		$('#pageCounter').text(PostsPageObject.pageNumber);
+		
+	});
+};
 
+function searchFunction(successFunction, backendURL, pageNumber, rowNumber){
 		let searchParams = [];
 		let searchWords = [];
 		let error = false;
@@ -27,7 +34,9 @@ function prepareExecuteSearch(successFunction, backendURL) {
 				searchParams: searchParams,
 				searchWords: searchWords,
 				logicalOperand: selectedOperand,
-				wordPosition: selectedPosition
+				wordPosition: selectedPosition,
+				pageNumber: pageNumber,
+				rowNumber: rowNumber
 			};
 
 			$.ajax({
@@ -48,8 +57,7 @@ function prepareExecuteSearch(successFunction, backendURL) {
 				}
 			});
 		}
-	});
-};
+}
 
 
 function postSuccessFunction(data) {
@@ -72,6 +80,7 @@ function postSuccessFunction(data) {
 		PostsPageObject.viewCommentListener(data.data[i]);
 		PostsPageObject.getComments(data.data[i]);
 	}
+	PostsPageObject.paginationButtonsInit(data.data.length, data.more);
 }
 
 function friendSuccessFunction(data) {

@@ -33,7 +33,22 @@
 <div class="splitColumnsRow">
 	<div class="left-column">
 		<div id="ajaxShowVissiblePosts"></div>
+		<div style="text-align:center">
+			<div style="display:inline-flex">
+				<ul class="pagination">
+					<li class="page-item" id="previousButtonListItem"><button id="previousButton" class="page-link">Prev</button></li>
+					<li class="page-item"><a id="pageCounter" class="page-link">1</a></li>
+					<li class="page-item" id="nextButtonListItem"><button id="nextButton" class="page-link">Next</button></li>
+				</ul>
+			</div>
+			<div style="display: inline">
+				<select id="select-row-number" style="width:10%; "></select>
+			</div>
+			
+		</div>
+		
 	</div>
+	
 	<div class="right-column">
 		<div class="new-post-div">
 			<div class="form-group">

@@ -60,7 +60,7 @@ public class FacePostServiceImpl implements FacePostService{
 	}
 	
 	@Override
-	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition) {
+	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, int pageNumber, int rowNumber) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		JSONArray vissiblePosts = null;
@@ -68,7 +68,7 @@ public class FacePostServiceImpl implements FacePostService{
 		try { 
 			connection = ConnectionClass.getConnection();
 			FacePostDAOImpl fpdao = new FacePostDAOImpl();
-			vissiblePosts = fpdao.searchVissiblePosts(userID, filters, words, logicalOperand, wordPosition, connection, statement);
+			vissiblePosts = fpdao.searchVissiblePosts(userID, filters, words, logicalOperand, wordPosition, pageNumber, rowNumber, connection, statement);
 			
 		} catch (SQLException ex) {
 			LOGGER.error("SQLException in searchVissiblePosts", ex);

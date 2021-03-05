@@ -17,8 +17,11 @@ public class FacePostDAOImpl implements FacePostDAO {
 
 	@Override
 	public JSONArray showVissiblePosts(int userID, Connection connection, PreparedStatement statement) throws SQLException {
+		
+		StringBuilder str = new StringBuilder();
+		str.append(QueryHolder.SQL.GET_VISSIBLE_POSTS.replaceAll("%placeholder%", ""));
 
-		statement = connection.prepareStatement(QueryHolder.SQL.GET_VISSIBLE_POSTS.replaceAll("%placeholder%", ""));
+		statement = connection.prepareStatement(str.toString());
 		statement.setString(1, Integer.toString(userID));
 		statement.setString(2, Integer.toString(userID));
 		statement.setString(3, Integer.toString(userID));
@@ -30,13 +33,20 @@ public class FacePostDAOImpl implements FacePostDAO {
 	}
 
 	@Override
-	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, Connection connection, PreparedStatement statement) throws SQLException {
+	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, int pageNumber, int rowNumber, Connection connection, PreparedStatement statement) throws SQLException {
 
 		String[] caseAll = { "FP.TITLE", "FP.BODY", "FP.TYPE", "(FU.NAME || ' ' || FU.SURNAME)" };
-		String placeholder = ConcatSQLSearch.createSQLQueryAddition("and", filters, words, logicalOperand, wordPosition, caseAll);
-		statement = connection.prepareStatement(QueryHolder.SQL.GET_VISSIBLE_POSTS.replaceAll("%placeholder%", placeholder));
+		String placeholder;
+		if(words.get(0).toString().isBlank() || words.get(0).toString().isEmpty()) {
+			placeholder = "";
+		}else {
+			placeholder = ConcatSQLSearch.createSQLQueryAddition("and", filters, words, logicalOperand, wordPosition, caseAll);
+		}
+		StringBuilder str = new StringBuilder();
+		str.append(QueryHolder.SQL.GET_VISSIBLE_POSTS.replaceAll("%placeholder%", placeholder));
+		str.append(" OFFSET " + (pageNumber-1)*rowNumber + " ROWS FETCH NEXT " + (rowNumber+1) + "ROWS ONLY");
+		statement = connection.prepareStatement(str.toString());
 		
-		System.out.println(QueryHolder.SQL.GET_VISSIBLE_POSTS.replaceAll("%placeholder%", placeholder));
 		statement.setString(1, Integer.toString(userID));
 		statement.setString(2, Integer.toString(userID));
 		statement.setString(3, Integer.toString(userID));

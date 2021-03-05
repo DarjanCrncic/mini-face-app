@@ -1,9 +1,12 @@
 package com.miniface.services;
 
+import java.io.InputStream;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.miniface.entities.FaceUserEntity;
+import com.miniface.entities.InfoEntity;
 
 public interface FaceUserService {
 	
@@ -22,6 +25,12 @@ public interface FaceUserService {
 	public int updateFriendRequest(int friendID, int userID, String updateType);
 
 	public JSONArray showGroupPendingRequsts(int userID);
+
+	public int updateImage(int userID, InputStream inputStream);
+
+	public InfoEntity getUserInfo(int userID);
+
+	public int updateInfo(int userID, String username, String country, String city, String age, String gender);
 	
 	
 }

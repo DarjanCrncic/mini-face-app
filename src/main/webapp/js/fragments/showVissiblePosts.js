@@ -21,11 +21,27 @@ $(document).ready(function() {
 	addFilters([{ id: "all", text: "All" }, { id: "fp.title", text: "Title" }, { id: "fp.body", text: "Body" }, {id: "fu.name+fu.surname", text: "Posted By"}]);
 	prepareExecuteSearch(postSuccessFunction, 'ShowPosts');
 	
-	PostsPageObject.showAllVissiblePosts("all", 0);
+	PostsPageObject.rowNumber = 5;
+	searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
 
 	PostsPageObject.createPostScriptInit("user", 0);
 
 	PostsPageObject.editPostScriptInit();
 	
-
+	PostsPageObject.pageNumber = 1;
+	
+	PostsPageObject.initPaginationButtons();
+	
+	
+	///// row number selector configuration
+	$("#select-row-number").select2({
+		theme: "bootstrap",
+		data: [{id:"5", text:"5"}, {id:"10", text:"10"}, {id:"20", text:"20"}]
+	});
+	
+	$("#select-row-number").change(function(){
+		PostsPageObject.rowNumber = $("#select-row-number").val();
+		PostsPageObject.pageNumber = 1;
+		searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
+	});
 });

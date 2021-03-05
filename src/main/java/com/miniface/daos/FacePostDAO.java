@@ -13,7 +13,7 @@ public interface FacePostDAO {
 	
 	public JSONArray showVissiblePosts(int userID, Connection connection, PreparedStatement statement) throws SQLException;
 
-	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, Connection connection, PreparedStatement statement) throws SQLException;
+	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, int pageNumber, int rowNumber, Connection connection, PreparedStatement statement) throws SQLException;
 	
 	public JSONObject createPost(int userID, int groupID, FacePostEntity post, String type, Connection connection, PreparedStatement statement) throws SQLException;
 

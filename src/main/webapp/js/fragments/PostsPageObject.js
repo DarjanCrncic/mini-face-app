@@ -1,18 +1,21 @@
 
 const PostsPageObject = {
 
-	/////////////////////// show all vissible posts on page load
+	pageNumber: 1,
+	rowNumber: 5,
+
+	/////////////////////// show all vissible posts on page load // !!!!!!!!!! NOT USED ANYMORE, EVERYTHING THROUGH SEARCH
 	showAllVissiblePosts: function(type, groupID) {
 		$.ajax({
 			url: 'ShowPosts',
 			dataType: 'json',
-			data: { type: type, groupID: groupID },
+			data: { type: type, groupID: groupID, pageNumber: PostsPageObject.pageNumber },
 			type: "GET",
 			success: function(data) {
 				if (data.status == 'success') {
+					$('#ajaxShowVissiblePosts').html("");
 					for (var i = 0; i < data.data.length; i++) {
 						if (data.userID == data.data[i].CREATOR_ID) {
-
 							$('#ajaxShowVissiblePosts').append(PostsPageObject.createPostHtml(data.data[i]));
 
 							if (data.data[i].TYPE == "user")
@@ -28,6 +31,7 @@ const PostsPageObject = {
 						PostsPageObject.viewCommentListener(data.data[i]);
 						PostsPageObject.getComments(data.data[i]);
 					}
+					PostsPageObject.paginationButtonsInit(data.data.length);
 				} else {
 
 				}
@@ -58,16 +62,9 @@ const PostsPageObject = {
 				data: input,
 				success: function(data) {
 					if (data.status == 'success') {
-						
-						data.data.LIKES = 0;
-						$('#ajaxShowVissiblePosts').prepend(PostsPageObject.createPostHtml(data.data));
-						PostsPageObject.addDeleteEditPostButtonListener(data.data, type);
-						PostsPageObject.addLikePostListener(data.data, "post");
-						PostsPageObject.addCommentListener(data.data);
 						$("#newPostTitleInput").val('');
 						$("#newPostBodyInput").val('');
-						PostsPageObject.viewCommentListener(data.data);
-						PostsPageObject.getComments(data.data);
+						searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
 					} else {
 						alert(data.message);
 					}
@@ -136,8 +133,7 @@ const PostsPageObject = {
 				data: input,
 				success: function(data) {
 					if (data.status == 'success') {
-						$("#postDiv_" + data.data.ID).empty();
-						$("#postDiv_" + data.data.ID).remove();
+						searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
 					} else {
 						alert(data.message);
 					}
@@ -175,7 +171,7 @@ const PostsPageObject = {
 				data: input,
 				success: function(data) {
 					if (data.status == 'success') {
-						PostsPageObject.getLikes({ID: input.postId}, "postLikes", "likeCounter");
+						PostsPageObject.getLikes({ ID: input.postId }, "postLikes", "likeCounter");
 					} else {
 						alert(data.message);
 					}
@@ -186,11 +182,11 @@ const PostsPageObject = {
 			})
 		});
 	},
-	
+
 	///// listener for adding likes to comments
-	addLikeCommentListener: function(data, type){
-		$('#likeComment_'+data.ID).click(function(){
-			
+	addLikeCommentListener: function(data, type) {
+		$('#likeComment_' + data.ID).click(function() {
+
 			let input = {
 				operation: "likeComment",
 				commentID: data.ID,
@@ -204,7 +200,7 @@ const PostsPageObject = {
 				data: input,
 				success: function(data) {
 					if (data.status == 'success') {
-						PostsPageObject.getLikes({ID: input.commentID}, "commentLikes", "likeCounterComments");
+						PostsPageObject.getLikes({ ID: input.commentID }, "commentLikes", "likeCounterComments");
 					} else {
 						alert(data.message);
 					}
@@ -215,7 +211,7 @@ const PostsPageObject = {
 			})
 		});
 	},
-	
+
 	/// listener for adding comments
 	addCommentListener: function(data) {
 		$('#submitComment_' + data.ID).click(function() {
@@ -234,7 +230,7 @@ const PostsPageObject = {
 				success: function(data) {
 					if (data.status == 'success') {
 						$('#postComment_' + input.postId).val('');
-						PostsPageObject.getComments({ID: input.postId});
+						PostsPageObject.getComments({ ID: input.postId });
 						if ($('#commentsSection_' + input.postId).is(":hidden")) {
 							$('#commentsSection_' + input.postId).show();
 						}
@@ -248,17 +244,17 @@ const PostsPageObject = {
 			})
 		});
 	},
-	
+
 	///// delete comments listener
-	deleteCommentListener: function(data){
-		$('#deleteComment_' + data.ID).click(function(){
-			
+	deleteCommentListener: function(data) {
+		$('#deleteComment_' + data.ID).click(function() {
+
 			let input = {
 				operation: "deleteComment",
 				commentID: data.ID,
 				postId: data.POST_ID
 			}
-			
+
 			$.ajax({
 				type: "POST",
 				url: 'CRUDPost',
@@ -267,7 +263,7 @@ const PostsPageObject = {
 				success: function(data) {
 					if (data.status == 'success') {
 						$('#postComment_' + input.postId).val('');
-						PostsPageObject.getComments({ID: input.postId});
+						PostsPageObject.getComments({ ID: input.postId });
 					} else {
 						alert(data.message);
 					}
@@ -306,9 +302,9 @@ const PostsPageObject = {
 				if (data.status == 'success') {
 					$('#commentsSection_' + input.postId).empty();
 					if (data.data.length == 0) {
-						$('#commentCounter_'+input.postId).text('(0)');
-					}else{
-						$('#commentCounter_'+input.postId).text('('+data.data.length+')');
+						$('#commentCounter_' + input.postId).text('(0)');
+					} else {
+						$('#commentCounter_' + input.postId).text('(' + data.data.length + ')');
 					}
 					for (var i = 0; i < data.data.length; i++) {
 						$('#commentsSection_' + data.data[i].POST_ID).append(PostsPageObject.createCommentHtml(data.data[i], data.userID));
@@ -316,7 +312,7 @@ const PostsPageObject = {
 						PostsPageObject.getLikes(data.data[i], "commentLikes", "likeCounterComments");
 						PostsPageObject.deleteCommentListener(data.data[i]);
 					}
-					
+
 				} else {
 					alert(data.message);
 				}
@@ -326,14 +322,14 @@ const PostsPageObject = {
 			}
 		});
 	},
-	
+
 	//// ajax call to get likes
-	getLikes: function(data, type, counterID){
+	getLikes: function(data, type, counterID) {
 		let input = {
 			entityID: data.ID,
 			type: type
 		}
-	
+
 		$.ajax({
 			type: "GET",
 			url: 'CRUDPost',
@@ -341,7 +337,7 @@ const PostsPageObject = {
 			data: input,
 			success: function(data) {
 				if (data.status == 'success') {
-					$('#'+counterID+'_'+input.entityID).text(data.data.LIKES);
+					$('#' + counterID + '_' + input.entityID).text(data.data.LIKES);
 				} else {
 					alert(data.message);
 				}
@@ -368,7 +364,7 @@ const PostsPageObject = {
 		<div class="input-group">\
  		<input type="text" class="form-control" id="postComment_'+ data.ID + '">\
   		<button class="btn btn-outline-secondary" id="submitComment_'+ data.ID + '" type="button">Submit</button></div>\
-		<button id="viewComments_'+ data.ID + '" class="viewCommentsButton">View Comments</button><p id="commentCounter_'+ data.ID + '" style="display:inline; margin-left: 5px">\
+		<button id="viewComments_'+ data.ID + '" class="viewCommentsButton">View Comments</button><p id="commentCounter_' + data.ID + '" style="display:inline; margin-left: 5px">\
 		<div id="commentsSection_' + data.ID + '" class="viewCommentsDiv"></div>\
 		</div></div ></div ></div >');
 	},
@@ -385,7 +381,7 @@ const PostsPageObject = {
 		<div class="input-group">\
  		<input type="text" class="form-control" id="postComment_'+ data.ID + '">\
   		<button class="btn btn-outline-secondary" id="submitComment_'+ data.ID + '" type="button">Submit</button></div>\
-		<button id="viewComments_'+ data.ID + '" class="viewCommentsButton">View Comments</button><p id="commentCounter_'+ data.ID + '" style="display:inline; margin-left: 5px">\
+		<button id="viewComments_'+ data.ID + '" class="viewCommentsButton">View Comments</button><p id="commentCounter_' + data.ID + '" style="display:inline; margin-left: 5px">\
 		<div id="commentsSection_' + data.ID + '" class="viewCommentsDiv"></div>\
 		</div></div ></div ></div > ');
 	},
@@ -393,18 +389,44 @@ const PostsPageObject = {
 	createCommentHtml: function(data, userID) {
 		return ('<hr style="margin:0; padding:0;"><h5 class="commentPoster" style="display:inline;">' + data.NAME + '</h5>\
 		<div style="display:inline; float:right;"><i class="fas fa-thumbs-up" style="color: #007bff; display:inline;" ></i><p id="likeCounterComments_'+ data.ID + '" style="display: inline; margin-left: 5px"></p>\
-		<button class="far fa-thumbs-up like-button" id="likeComment_'+ data.ID + '"></button>'+ deleteOrNot(data, userID)
-		+'</div><h5 class="commentText" >' + data.POST_COMMENT + '</h5>');
-		
-		function deleteOrNot(data,userID){
-			if(data.COMMENT_CREATOR_ID == userID || data.POST_CREATOR_ID == userID){
+		<button class="far fa-thumbs-up like-button" id="likeComment_'+ data.ID + '"></button>' + deleteOrNot(data, userID)
+			+ '</div><h5 class="commentText" >' + data.POST_COMMENT + '</h5>');
+
+		function deleteOrNot(data, userID) {
+			if (data.COMMENT_CREATOR_ID == userID || data.POST_CREATOR_ID == userID) {
 				return '<button class="far fa-trash-alt delete-button" style="padding:0;" id="deleteComment_' + data.ID + '"></button>';
-			}else{
+			} else {
 				return '';
 			}
 		}
+	},
+
+	///////////// PAGINATION
+	paginationButtonsInit: function(length, more) {
+		if (PostsPageObject.pageNumber <= 1) {
+			$('#previousButton').click(false);
+			$('#previousButtonListItem').addClass("disabled");
+		} else {
+			$('#previousButtonListItem').removeClass("disabled");
+		}
+		if (length < PostsPageObject.rowNumber || !more) {
+			$('#nextButton').click(false);
+			$('#nextButtonListItem').addClass("disabled");
+		} else {
+			$('#nextButtonListItem').removeClass("disabled");
+		}
+		$('#pageCounter').text(PostsPageObject.pageNumber);
+	},
+
+	initPaginationButtons: function() {
+		$('#nextButton').click(function() {
+			PostsPageObject.pageNumber = PostsPageObject.pageNumber + 1;
+			searchFunction(postSuccessFunction, 'ShowPosts', PostsPageObject.pageNumber, PostsPageObject.rowNumber);
+		});
+
+		$('#previousButton').click(function() {
+			PostsPageObject.pageNumber = PostsPageObject.pageNumber - 1;
+			searchFunction(postSuccessFunction, 'ShowPosts', PostsPageObject.pageNumber, PostsPageObject.rowNumber);
+		});
 	}
-
-
-
 }

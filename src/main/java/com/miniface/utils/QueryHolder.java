@@ -66,10 +66,15 @@ public class QueryHolder {
         SQL.GET_LIKES_FOR_POST = properties.getProperty("getLikesForPost");
         SQL.LIKE_COMMENT = properties.getProperty("likeComment");
         SQL.DELETE_COMMENT = properties.getProperty("deleteComment");
+        SQL.UPDATE_USER_IMAGE = properties.getProperty("updateUserImage");
+        SQL.GET_USER_INFO = properties.getProperty("getUserInfo");
+        SQL.UPDATE_USER_INFO = properties.getProperty("updateUserInfo");
     }
     
     public static class SQL {
-        public static String REGISTER_USER;
+        public static String UPDATE_USER_IMAGE;
+        public static String GET_USER_INFO;
+		public static String REGISTER_USER;
         public static String LOGIN_USER;
         public static String CREATE_POST;
         public static String CONNECT_USER_TO_POST;
@@ -105,6 +110,7 @@ public class QueryHolder {
         public static String GET_LIKES_FOR_POST;
         public static String GET_LIKES_FOR_COMMENT;
         public static String DELETE_COMMENT;
+        public static String UPDATE_USER_INFO;
        
     }
 }

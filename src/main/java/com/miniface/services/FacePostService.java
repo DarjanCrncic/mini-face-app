@@ -11,7 +11,7 @@ public interface FacePostService {
 	
 	public JSONArray showVissiblePosts(int userID);
 
-	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition);
+	public JSONArray searchVissiblePosts(int userID, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, int pageNumber, int rowNumber);
 
 	public int deletePost(String postId, String type);
 
