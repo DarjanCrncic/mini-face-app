@@ -33,5 +33,7 @@ public interface FaceUserDAO {
 	public InfoEntity getUserInfo(int userID, Connection connection, PreparedStatement statement) throws SQLException;
 
 	public int updateInfo(int userID, String username, String country, String city, String age, String gender, Connection connection, PreparedStatement statement) throws SQLException;
+
+	public int updateNotify(int userID, boolean notify, Connection connection, PreparedStatement statement) throws SQLException;
 	
 }

@@ -53,11 +53,48 @@ $(document).ready(function() {
 				$('#profileCity').text(data.data.CITY);
 				$('#profileCountry').text(data.data.COUNTRY);
 				$('#profileGender').text(data.data.GENDER);
+				if(data.data.NOTIFY == true){
+					$('#receiveMailsCheck').prop('checked', true);
+				}else{
+					$('#receiveMailsCheck').prop('checked', false);
+				}
+				
 			},
 			error: function() {
 				alert(data.message);
 			}
 		});
 	}
+	
+	$('#receiveMailsCheck').click(function(){
+		let notify;
+		if($('#receiveMailsCheck').is(':checked')){
+			notify = true;
+		}else{
+			notify = false;
+		}
+		
+		let input = {
+			type: "updateNotify",
+			notify: notify
+		}
+
+		$.ajax({
+			type: "POST",
+			url: 'ProfilePage',
+			dataType: 'json',
+			data: input,
+			success: function(data) {
+				if (data.status == 'success') {
+
+				} else {
+					alert(data.message);
+				}
+			},
+			error: function() {
+				alert("Something went wrong, try again later");
+			}
+		});
+	});
 	
 });

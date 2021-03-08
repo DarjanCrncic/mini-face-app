@@ -261,4 +261,28 @@ public class FaceUserServiceImpl implements FaceUserService {
 		return result;
 	}
 	
+	@Override
+	public int updateNotify(int userID, boolean notify) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int result = 0;
+		
+		try {
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			FaceUserDAOImpl fudao = new FaceUserDAOImpl();	
+			result = fudao.updateNotify(userID, notify, connection, statement);
+			connection.commit();
+
+		} catch (SQLException ex) {
+			LOGGER.error("SQLxception in updateNotify", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
+	}
+	
 }

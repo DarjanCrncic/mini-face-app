@@ -69,6 +69,7 @@ public class QueryHolder {
         SQL.UPDATE_USER_IMAGE = properties.getProperty("updateUserImage");
         SQL.GET_USER_INFO = properties.getProperty("getUserInfo");
         SQL.UPDATE_USER_INFO = properties.getProperty("updateUserInfo");
+        SQL.UPDATE_USER_NOTIFY = properties.getProperty("updateUserNotify");
     }
     
     public static class SQL {
@@ -111,6 +112,7 @@ public class QueryHolder {
         public static String GET_LIKES_FOR_COMMENT;
         public static String DELETE_COMMENT;
         public static String UPDATE_USER_INFO;
+        public static String UPDATE_USER_NOTIFY;
        
     }
 }

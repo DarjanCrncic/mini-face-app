@@ -13,6 +13,7 @@ public class InfoEntity {
 	private String country;
 	private String username;
 	private String gender;
+	private boolean notify;
 	
 	public Blob getBlob() {
 		return blob;
@@ -77,5 +78,14 @@ public class InfoEntity {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+	public boolean getNotify() {
+		return notify;
+	}
+
+	public void setNotify(boolean notify) {
+		this.notify = notify;
+	}
+	
 	
 }

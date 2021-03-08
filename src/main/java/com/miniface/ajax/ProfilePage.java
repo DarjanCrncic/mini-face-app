@@ -22,10 +22,10 @@ import com.miniface.utils.RequestValidator;
 @WebServlet("/ProfilePage")
 public class ProfilePage extends JSONServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
     public ProfilePage() {
         super();
-  }
+    }
 
     @Override
 	protected void doGetLoggedIn(HttpServletRequest request, HttpServletResponse response, HttpSession session, JSONObject json) throws ServletException, IOException {
@@ -58,6 +58,7 @@ public class ProfilePage extends JSONServlet {
         info.put("CITY", infoEntity.getCity());
         info.put("COUNTRY", infoEntity.getCountry());
         info.put("GENDER", infoEntity.getGender());
+        info.put("NOTIFY", infoEntity.getNotify());
       
 		json.put("data", info);
 		json.put("message", "Transaction successful");
@@ -76,6 +77,7 @@ public class ProfilePage extends JSONServlet {
 		String city = RequestValidator.validateRequest(request, "city");
 		String age = RequestValidator.validateRequest(request, "age");
 		String gender = RequestValidator.validateRequest(request, "gender");
+		boolean notify = Boolean.parseBoolean(RequestValidator.validateRequest(request, "notify"));
     	int result = 0;
         FaceUserServiceImpl fusi = new FaceUserServiceImpl();
     		
@@ -110,9 +112,23 @@ public class ProfilePage extends JSONServlet {
     				json.put("status", "success");
     			}
     		}
-    		response.setCharacterEncoding("UTF-8");
-    		response.getWriter().write(json.toString());
     	}
+    	
+    	if(type.equals("updateNotify")) {
+    		
+    		result = fusi.updateNotify(Integer.parseInt((String) session.getAttribute("userID")), notify);
+    		if (result == 0) {
+				json.put("message", "Error editing info data");
+				json.put("status", "error");
+			} else {
+				json.put("message", "Transaction successful");
+				json.put("status", "success");
+			}
+    		
+    	}
+    	
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json.toString());
         
 	}
 

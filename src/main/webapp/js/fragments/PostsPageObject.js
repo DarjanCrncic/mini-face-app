@@ -4,7 +4,7 @@ const PostsPageObject = {
 	pageNumber: 1,
 	rowNumber: 5,
 
-	/////////////////////// show all vissible posts on page load // !!!!!!!!!! NOT USED ANYMORE, EVERYTHING THROUGH SEARCH
+	/////////////////////// show all vissible posts on page load // !!!!!!!!!! NOT USED ANYMORE, EVERYTHING THROUGH SEARCH !!!! USED IN GROUP POSTS
 	showAllVissiblePosts: function(type, groupID) {
 		$.ajax({
 			url: 'ShowPosts',
@@ -21,7 +21,7 @@ const PostsPageObject = {
 							if (data.data[i].TYPE == "user")
 								PostsPageObject.addDeleteEditPostButtonListener(data.data[i], "user");
 							if (data.data[i].TYPE == "group")
-								PostsPageObject.addDeleteEditPostButtonListener(data.data[i], "group");
+								PostsPageObject.addDeleteEditPostButtonListener(data.data[i], "group", groupID);
 
 						} else {
 							$('#ajaxShowVissiblePosts').append(PostsPageObject.createPostHtmlNotUser(data.data[i]));
@@ -64,7 +64,12 @@ const PostsPageObject = {
 					if (data.status == 'success') {
 						$("#newPostTitleInput").val('');
 						$("#newPostBodyInput").val('');
-						searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
+						if(type == "group"){
+							PostsPageObject.showAllVissiblePosts("group", groupID);
+						}
+						if(type == "user"){
+							searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
+						}						
 					} else {
 						alert(data.message);
 					}
@@ -132,8 +137,10 @@ const PostsPageObject = {
 				dataType: 'json',
 				data: input,
 				success: function(data) {
-					if (data.status == 'success') {
+					if (data.status == 'success' && type == "user" || data.status == 'success' && type == "group" && input.groupID == null) {
 						searchFunction(postSuccessFunction, 'ShowPosts', 1, PostsPageObject.rowNumber);
+					} else if(data.status == 'success' && type == "group"){
+						PostsPageObject.showAllVissiblePosts("group", input.groupID);
 					} else {
 						alert(data.message);
 					}

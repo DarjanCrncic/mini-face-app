@@ -32,5 +32,7 @@ public interface FacePostDAO {
 	public JSONArray getLikes(int entityID, String type, Connection connection, PreparedStatement statement) throws SQLException;
 
 	public int deleteComment(int commentID, Connection connection, PreparedStatement statement) throws SQLException;
+
+	public void sendNotifications(int groupID, FacePostEntity post, Connection connection, PreparedStatement statement) throws SQLException;
 	
 }

@@ -176,6 +176,7 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 			infoEntity.setName(set.getString("NAME"));
 			infoEntity.setGender(set.getString("GENDER"));
 			infoEntity.setUsername(set.getString("USERNAME"));
+			infoEntity.setNotify(set.getBoolean("NOTIFY"));
 		}
 		
 		return infoEntity;
@@ -192,6 +193,16 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		statement.setString(5, gender);		
 		statement.setString(6, Integer.toString(userID));
 				
+		result = statement.executeUpdate();
+		return result;
+	}
+	
+	@Override
+	public int updateNotify(int userID, boolean notify, Connection connection, PreparedStatement statement) throws SQLException {
+		int result = 0;
+		statement = connection.prepareStatement(QueryHolder.SQL.UPDATE_USER_NOTIFY);
+		statement.setString(1, Boolean.toString(notify));
+		statement.setString(2, Integer.toString(userID));
 		result = statement.executeUpdate();
 		return result;
 	}

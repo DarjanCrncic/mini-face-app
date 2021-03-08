@@ -9,9 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.miniface.entities.FacePostEntity;
+import com.miniface.listeners.ContextListener;
 import com.miniface.utils.ConcatSQLSearch;
 import com.miniface.utils.ConnectionClass;
 import com.miniface.utils.QueryHolder;
+import com.miniface.utils.UtilsMail;
 
 public class FacePostDAOImpl implements FacePostDAO {
 
@@ -97,6 +99,8 @@ public class FacePostDAOImpl implements FacePostDAO {
 				statement = connection.prepareStatement(QueryHolder.SQL.GET_POST_BY_ID);
 				statement.setString(1, Integer.toString(postID));
 				arr = ConnectionClass.executePreparedStatement(statement);
+				
+				sendNotifications(groupID, post, connection, statement);
 			}
 		}
 		generatedKeys.close();
@@ -106,6 +110,27 @@ public class FacePostDAOImpl implements FacePostDAO {
 		}
 
 		return newPost;
+	}
+	
+	@Override
+	public void sendNotifications(int groupID, FacePostEntity post, Connection connection, PreparedStatement statement) throws SQLException{
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_GROUP_MEMBERS);
+		statement.setString(1, Integer.toString(groupID));
+		JSONArray arr = ConnectionClass.executePreparedStatement(statement);
+		
+		if(arr!=null) {
+			for(int i=0; i<arr.length(); i++) {
+				if(arr.getJSONObject(i).optString("NOTIFY").equals("true")) {
+					/// thread for sending email, uses global executor defined in ContextListener
+			    	ContextListener.executor.execute(new Runnable() {
+			            @Override
+			            public void run() {
+			                UtilsMail.sendEmail("minifaceapp@gmail.com", post.getTitle() + ":\n" + post.getBody(), "New post!");   
+			            }
+			        });
+				}
+			}
+		}	
 	}
 
 	@Override

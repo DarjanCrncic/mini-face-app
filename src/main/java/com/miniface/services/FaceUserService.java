@@ -31,6 +31,8 @@ public interface FaceUserService {
 	public InfoEntity getUserInfo(int userID);
 
 	public int updateInfo(int userID, String username, String country, String city, String age, String gender);
+
+	public int updateNotify(int parseInt, boolean notify);
 	
 	
 }
