@@ -70,7 +70,7 @@ public class LoginUser extends HttpServlet {
 				// Create and add cookie
 				Cookie cookie = new Cookie("username", username);
 				response.addCookie(cookie);
-
+				
 				// Redirect to main page
 				String encodedUrl = response.encodeRedirectURL("main");
 				response.sendRedirect(encodedUrl);

@@ -34,7 +34,7 @@ public class HomePage extends JSONServlet {
 		jsonObj.put("username", username);
 		jsonObj.put("userID", userID);
 		
-
+		
 		json.put("data", jsonObj);
 		json.put("message", "Transaction successful");
 		json.put("status", "success");

@@ -14,6 +14,7 @@ import org.json.JSONTokener;
 
 import com.miniface.controllers.JSONServlet;
 import com.miniface.services.FacePostServiceImpl;
+import com.miniface.utils.JasperPDF;
 import com.miniface.utils.RequestValidator;
 
 @WebServlet("/ShowPosts")
@@ -46,6 +47,8 @@ public class ShowPosts extends JSONServlet {
 			json.put("status", "error");
 			
 		}
+		
+		
 		json.put("userID", session.getAttribute("userID"));
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json.toString());
@@ -64,7 +67,9 @@ public class ShowPosts extends JSONServlet {
 		int rowNumber = jsonRequest.getInt("rowNumber");
 		FacePostServiceImpl fpsi = new FacePostServiceImpl();
 		JSONArray arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand, wordPosition, pageNumber, rowNumber);
-
+		
+		JasperPDF.getJasperPDFPost(Integer.parseInt((String) session.getAttribute("userID")), (String) session.getAttribute("username"), session.getAttribute("name")+" "+session.getAttribute("surname"));
+		
 		if(!arr.isEmpty() && arr.length() > 0){
 			if(arr.length() == rowNumber+1) {
 				arr.remove(rowNumber);
