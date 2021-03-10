@@ -36,6 +36,9 @@
 				<li class="nav-item">
 						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
 				</li>
+				<li class="nav-item">
+						<button class="nav-link nav-button" id="chatroom" onclick="MainObject.showTertiary(this.id)">Chat</button>		
+				</li>
 				
 		
 			</ul>
@@ -43,7 +46,7 @@
 			<a id="nameDropdown" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
         	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           		<a class="dropdown-item" href="#" id="profilePage" onclick="MainObject.navigationPage(this.id)">View Profile</a>
-         		<a class="dropdown-item" href="logout">Logout</a>
+         		<a class="dropdown-item" href="logout" id="logout">Logout</a>
          	</div>
 		</div>	
 		
@@ -57,7 +60,10 @@
 
 	
 	<%@ include file="partials/footer.jsp"%>
+	
+	<script>MainObject.loadTertiary("html/fragments/chatroom.html");
 
+	</script>
 
 </body>
 </html>

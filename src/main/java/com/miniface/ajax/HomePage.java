@@ -26,10 +26,12 @@ public class HomePage extends JSONServlet {
 		String name = (String) session.getAttribute("name");
 		String surname = (String) session.getAttribute("surname");
 		String userID = (String) session.getAttribute("userID");
+		String username = (String) session.getAttribute("username");
 		
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("surname", surname);
 		jsonObj.put("name", name);
+		jsonObj.put("username", username);
 		jsonObj.put("userID", userID);
 		
 

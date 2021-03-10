@@ -286,3 +286,59 @@
 	float: right;
 	font-size: 1.2rem;
 }
+
+/*chatroom*/
+
+.left-column-chat {
+	float: left;
+	width: 10%;
+	background-color: white;
+}
+
+.right-column-chat {
+	float: left;
+	width: 90%;
+}
+
+#messageDiv{
+	height: 20rem;
+	color: blue;
+	overflow: scroll;
+	background-color: #ECECEC;	
+}
+
+#usersDiv{
+	height: 20rem;
+	overflow: auto;	
+}
+
+.chatWindows{
+	background-color: white;
+	margin: 5px;
+	border-radius: 0.5rem;
+	padding: 5px;
+	border-width: 2px;
+}
+
+.chatline{
+	margin-bottom: 8px;
+}
+
+.horizontalSep{
+	margin: 8px 0 8px 0;
+	height: 2px;
+}
+.onlineUsersButton{
+	width: 100%;
+}
+
+#messageText{
+	margin-top: 10px;
+}
+
+#sendMessageButton{
+	width: 100%;
+	margin-top: 10px;
+}
+
+

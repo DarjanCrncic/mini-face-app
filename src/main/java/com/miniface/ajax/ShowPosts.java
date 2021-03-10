@@ -36,7 +36,7 @@ public class ShowPosts extends JSONServlet {
 		if(type.equals("group") && groupID != null) 
 			arr = fpsi.showVissiblePostsForGroup(Integer.parseInt(groupID));
 		
-		if (!arr.isEmpty() && arr != null) {						
+		if (arr != null && !arr.isEmpty()) {						
 			json.put("data", arr);
 			json.put("message", "Transaction successful");
 			json.put("status", "success");

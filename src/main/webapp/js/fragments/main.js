@@ -8,6 +8,8 @@ const MainObject = {
 		if (unloadSecondary) {
 			$("#secondary").empty();
 		}
+		
+		MainObject.hideTertiary();
 	},
 
 	loadSecondary: function(HTMLName, unloadPrimary, callback) {
@@ -17,6 +19,7 @@ const MainObject = {
 		if (unloadPrimary) {
 			$("#primary").empty();
 		}
+		MainObject.hideTertiary();
 	},
 
 	loadTertiary: function(HTMLName, unloadSecondary, callback) {
@@ -38,6 +41,7 @@ const MainObject = {
 		if (showPrimary) {
 			$("#primary").show();
 		}
+		if(callback)
 		callback();
 	},
 
@@ -46,6 +50,7 @@ const MainObject = {
 		if (showSecondary) {
 			$("#secondary").show();
 		}
+		if(callback)
 		callback();
 	},
 
@@ -64,5 +69,13 @@ const MainObject = {
 		return parseInt(max);
 	},
 	
+	showTertiary: function() {
+		MainObject.unloadPrimary();
+		MainObject.unloadSecondary(false);
+		$("#tertiary").show();
+	},
+	hideTertiary: function() {
+		$("#tertiary").hide();
+	},
 }
 
