@@ -23,7 +23,7 @@ public class QueryHolder {
     				readProperties(properties);
     				initialized = true;
     			} catch (IOException ex) {
-    				ex.printStackTrace(System.out);
+    				ex.printStackTrace();
     			}
     		}
     	}

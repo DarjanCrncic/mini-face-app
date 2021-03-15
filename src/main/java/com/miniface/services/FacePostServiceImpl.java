@@ -248,5 +248,25 @@ public class FacePostServiceImpl implements FacePostService{
 		}
 		return result;
 	}
+	
+	@Override
+	public JSONArray getPostByID(int postID) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		JSONArray post = null;
+		try { 
+			connection = ConnectionClass.getConnection();
+			FacePostDAOImpl fpdao = new FacePostDAOImpl();
+			post = fpdao.getPostByID(postID, connection, statement);
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in getPostByID", ex);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		return post;
+		
+	}
 
 }

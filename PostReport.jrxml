@@ -41,6 +41,7 @@
 		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="240"/>
 		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="751"/>
 		<parameter name="user_id" class="java.lang.String"/>
+		<parameter name="placeholder" class="java.lang.String"/>
 		<queryString language="plsql">
 			<![CDATA[select fp.id as ID, fp.title as TITLE, fp.body as BODY, (fu.name || ' ' || fu.surname) as name, fp.type, to_char(fp.creation_time,'DD/MM/YYYY HH24:MI') as CREATION_TIME, fp.creator_id, fp.creation_time as timeForSorting, counter.value as likes, comment_counter.value as comments from face_post_from_group fpfg 
 inner join face_post fp on fp.id = fpfg.post_id and 
@@ -48,7 +49,7 @@ fpfg.group_id in (select group_id from face_group_members where user_id = $P{use
 inner join face_user fu on fu.id = fp.creator_id 
 inner join (select fp.id, count(distinct user_id) as value from  face_user_post_likes fupl right outer join face_post fp on fp.id = fupl.post_id group by fp.id) counter on counter.id = fp.id 
 inner join (select fp.id, count(user_id) as value from  face_post_comments fpc right outer join face_post fp on fp.id = fpc.post_id group by fp.id) comment_counter on comment_counter.id = fp.id 
-inner join face_group fg on fg.id = fpfg.group_id 
+inner join face_group fg on fg.id = fpfg.group_id  $P!{placeholder}
 union 
 select fp.id as ID, fp.title as TITLE, fp.body as BODY, (fu.name || ' ' || fu.surname) as name, fp.type, to_char(fp.creation_time,'DD/MM/YYYY HH24:MI')  as CREATION_TIME, fp.creator_id, fp.creation_time as timeForSorting, counter.value as likes, comment_counter.value as comments from face_post_from_user fpfu 
 inner join face_post fp on fp.id = fpfu.post_id and (fpfu.user_id in ( (select id from face_user where 
@@ -56,7 +57,7 @@ id in (select friend_user_id from face_friend where face_user_id = $P{user_id}) 
 id in (select face_user_id from face_friend where friend_user_id = $P{user_id}))) or fpfu.user_id = $P{user_id}) 
 inner join (select fp.id, count(distinct user_id) as value from  face_user_post_likes fupl right outer join face_post fp on fp.id = fupl.post_id group by fp.id) counter on counter.id = fp.id 
 inner join (select fp.id, count(user_id) as value from  face_post_comments fpc right outer join face_post fp on fp.id = fpc.post_id group by fp.id) comment_counter on comment_counter.id = fp.id 
-inner join face_user fu on fpfu.user_id = fu.id 
+inner join face_user fu on fpfu.user_id = fu.id  $P!{placeholder}
 order by timeForSorting DESC]]>
 		</queryString>
 		<field name="ID" class="java.math.BigDecimal">
@@ -89,14 +90,16 @@ order by timeForSorting DESC]]>
 	<parameter name="user_id" class="java.lang.Integer"/>
 	<parameter name="user_full_name" class="java.lang.String"/>
 	<parameter name="username" class="java.lang.String"/>
-	<queryString>
-		<![CDATA[select * from dual]]>
+	<parameter name="placeholder" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT image FROM face_user WHERE id = $P{user_id}]]>
 	</queryString>
+	<field name="image" class="java.io.InputStream"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="70" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<textField>
 				<reportElement x="230" y="10" width="100" height="30" uuid="72cdf0ff-f197-4517-af44-f651ff0b3e4c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -105,28 +108,32 @@ order by timeForSorting DESC]]>
 				<textFieldExpression><![CDATA["Post Report"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="10" y="40" width="140" height="30" uuid="88b6b6bf-e5b3-40f9-b2e7-a4c482f2e53e"/>
+				<reportElement x="10" y="50" width="140" height="30" uuid="88b6b6bf-e5b3-40f9-b2e7-a4c482f2e53e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["User: "+$P{user_full_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="40" width="160" height="30" uuid="b839aba7-28f5-4a39-ac00-ee85dfad2bc2"/>
+				<reportElement x="150" y="50" width="160" height="30" uuid="b839aba7-28f5-4a39-ac00-ee85dfad2bc2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Username: "+$P{username}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="445" y="40" width="100" height="30" uuid="5ad0074d-3171-49dd-9e1f-07223c7521d7"/>
+				<reportElement x="445" y="50" width="100" height="30" uuid="5ad0074d-3171-49dd-9e1f-07223c7521d7"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="10" y="0" width="50" height="50" uuid="25ceefec-24d7-468c-ad50-d80f33e09497"/>
+				<imageExpression><![CDATA[$F{image}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
 		<band height="79" splitType="Stretch">
 			<componentElement>
-				<reportElement x="10" y="10" width="535" height="60" uuid="7a46fad9-08cf-445f-8af9-e4790dfc4161">
+				<reportElement x="10" y="19" width="535" height="60" uuid="7a46fad9-08cf-445f-8af9-e4790dfc4161">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -134,9 +141,12 @@ order by timeForSorting DESC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset1" uuid="d7583217-2a31-42bb-a444-14601de303ca">
+					<datasetRun subDataset="Dataset1" uuid="b0f829a6-41ba-4e35-a70c-67a87ee9008a">
 						<datasetParameter name="user_id">
 							<datasetParameterExpression><![CDATA[$P{user_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="placeholder">
+							<datasetParameterExpression><![CDATA[$P{placeholder}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>

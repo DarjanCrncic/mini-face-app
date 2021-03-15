@@ -116,7 +116,27 @@ const PostsPageObject = {
 			});
 		});
 	},
-
+	
+	//////////////////////// document download
+	addCreateWordDocListener:function(data){
+		$('#createWord_' + data.ID).click(function(){
+			
+			let input = {
+				postID: data.ID,
+			}
+			$.ajax({
+				type: "POST",
+				url: 'WordServlet',
+				data: input,
+				success: function(data) {
+					window.open("data:application/msword;base64, " + data.data, '_blank');
+				},
+				error: function() {
+					alert("Something went wrong, try again later");
+				}
+			})
+		})		
+	},
 
 	////////////////////// delete and edit post on click function
 	addDeleteEditPostButtonListener: function(data, type, groupID) {
@@ -366,7 +386,8 @@ const PostsPageObject = {
 		<div class="button-div">\
 		<button class="far fa-trash-alt  delete-button" id=' + data.ID + '></button>\
 		<button class="fas fa-edit edit-button" id="editPost_'+ data.ID + '"></button>\
-		<button class="far fa-thumbs-up like-button" id="likePost_'+ data.ID + '"</button></div></div>\
+		<button class="far fa-thumbs-up like-button" id="likePost_'+ data.ID + '"</button>\
+		<button class="fas fa-file-word create-button" id="createWord_'+data.ID+'"></button></div></div>\
 		<div class="card-footer">\
 		<div class="input-group">\
  		<input type="text" class="form-control" id="postComment_'+ data.ID + '">\

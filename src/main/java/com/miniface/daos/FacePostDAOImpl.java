@@ -255,4 +255,14 @@ public class FacePostDAOImpl implements FacePostDAO {
 		result = statement.executeUpdate();
 		return result;
 	}
+	
+	@Override
+	public JSONArray getPostByID(int postID, Connection connection, PreparedStatement statement) throws SQLException {
+		statement = connection.prepareStatement(QueryHolder.SQL.GET_POST_BY_ID);
+		statement.setString(1, Integer.toString(postID));
+		JSONArray jsonArray = null;
+		jsonArray = ConnectionClass.executePreparedStatement(statement);
+
+		return jsonArray;
+	}
 }

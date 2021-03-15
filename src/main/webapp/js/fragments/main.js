@@ -2,13 +2,14 @@
 const MainObject = {
 
 	loadPrimary: function(HTMLName, unloadSecondary, callback) {
+		
 		$("#primary").load(HTMLName, function() {
 			if (callback) callback();
 		});
 		if (unloadSecondary) {
 			$("#secondary").empty();
 		}
-		
+
 		MainObject.hideTertiary();
 	},
 
@@ -55,7 +56,7 @@ const MainObject = {
 	},
 
 	navigationPage: function(id) {
-		MainObject.loadPrimary("html/fragments/" + id + ".html", true);
+		MainObject.loadPrimary("html/fragments/" + id + ".html", true, null);
 	},
 
 	findMaxIdInClass: function(className) {
@@ -70,12 +71,34 @@ const MainObject = {
 	},
 	
 	showTertiary: function() {
-		MainObject.unloadPrimary();
-		MainObject.unloadSecondary(false);
+		MainObject.hidePrimary();
+		MainObject.hideSecondary(false);
 		$("#tertiary").show();
 	},
 	hideTertiary: function() {
 		$("#tertiary").hide();
+		MainObject.showPrimary();
+		MainObject.showSecondary();
 	},
+	
+	hidePrimary: function(){
+		$("#primary").hide();
+	},
+	
+	hideSecondary: function(){
+		$("#secondary").hide();
+	},
+	
+	showPrimary: function(){
+		$("#primary").show();
+	},
+	
+	showSecondary: function(){
+		$("#secondary").show();
+	}
+	
+	
+	
+	
 }
 

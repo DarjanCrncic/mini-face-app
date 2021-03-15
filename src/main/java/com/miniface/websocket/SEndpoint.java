@@ -63,7 +63,6 @@ public class SEndpoint {
 		for(Session peer: peers) {
 			peer.getBasicRemote().sendObject(message);
 		}
-		System.out.println(users.toString());
 	}
 	
 	public String getKey(Session value) {

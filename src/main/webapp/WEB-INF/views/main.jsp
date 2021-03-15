@@ -12,7 +12,7 @@
 </head>
 
 
-<body onload="MainObject.navigationPage('homePage')">
+<body>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#" style="color: #007bff;">MiniFace</a>
@@ -25,19 +25,22 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><button class="nav-link nav-button" id="homePage" onclick="MainObject.navigationPage(this.id)">Home 
+				<li class="nav-item"><button class="nav-link nav-button navigation" id="homePage" onclick="MainObject.navigationPage(this.id)">Home 
 					<span class="sr-only">(current)</span>
 				</button></li>
 				
-				<li class="nav-item"><button class="nav-link nav-button" id="showFriends" onclick="MainObject.navigationPage(this.id)">Friends</button></li>
+				<li class="nav-item"><button class="nav-link nav-button navigation" id="showFriends" onclick="MainObject.navigationPage(this.id)">Friends</button></li>
 				
-				<li class="nav-item"><button class="nav-link nav-button" id="showGroups" onclick="MainObject.navigationPage(this.id)">Groups</button></li>
+				<li class="nav-item"><button class="nav-link nav-button navigation" id="showGroups" onclick="MainObject.navigationPage(this.id)">Groups</button></li>
 
 				<li class="nav-item">
-						<button class="nav-link nav-button" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
+						<button class="nav-link nav-button navigation" id="showVissiblePosts" onclick="MainObject.navigationPage(this.id)">Posts</button>		
 				</li>
 				<li class="nav-item">
-						<button class="nav-link nav-button" id="chatroom" onclick="MainObject.showTertiary(this.id)">Chat</button>		
+						<button class="nav-link nav-button navigation" id="chatroom" onclick="MainObject.showTertiary(this.id)">Chat</button>		
+				</li>
+				<li class="nav-item">
+						<button class="nav-link nav-button navigation" id="reportPage" onclick="MainObject.navigationPage(this.id)">Report</button>		
 				</li>
 				
 		
@@ -45,7 +48,7 @@
 		<div class="dropdown">
 			<a id="nameDropdown" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
         	<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          		<a class="dropdown-item" href="#" id="profilePage" onclick="MainObject.navigationPage(this.id)">View Profile</a>
+          		<a class="dropdown-item navigation" href="#" id="profilePage" onclick="MainObject.navigationPage(this.id)">View Profile</a>
          		<a class="dropdown-item" href="logout" id="logout">Logout</a>
          	</div>
 		</div>	
@@ -53,7 +56,7 @@
 
 		</div>
 	</nav>
-
+	<div class="loader"></div>
 	<div id="primary" class="container"></div>
 	<div id="secondary" class="container"></div>
 	<div id="tertiary" class="container"></div>
@@ -61,9 +64,7 @@
 	
 	<%@ include file="partials/footer.jsp"%>
 	
-	<script>MainObject.loadTertiary("html/fragments/chatroom.html");
-
-	</script>
+	<script src="js/fragments/mainPage.js"></script>
 
 </body>
 </html>

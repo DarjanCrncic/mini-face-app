@@ -71,6 +71,8 @@ function postSuccessFunction(data) {
 				PostsPageObject.addDeleteEditPostButtonListener(data.data[i], "user");
 			if (data.data[i].TYPE == "group")
 				PostsPageObject.addDeleteEditPostButtonListener(data.data[i], "group");
+				
+			PostsPageObject.addCreateWordDocListener(data.data[i]);	
 
 		} else {
 			$('#ajaxShowVissiblePosts').append(PostsPageObject.createPostHtmlNotUser(data.data[i]));

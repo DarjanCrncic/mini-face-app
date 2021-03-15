@@ -34,5 +34,7 @@ public interface FacePostDAO {
 	public int deleteComment(int commentID, Connection connection, PreparedStatement statement) throws SQLException;
 
 	public void sendNotifications(int groupID, FacePostEntity post, Connection connection, PreparedStatement statement) throws SQLException;
+
+	public JSONArray getPostByID(int postID, Connection connection, PreparedStatement statement) throws SQLException;
 	
 }

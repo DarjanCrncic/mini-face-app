@@ -41,8 +41,6 @@ public class FaceUserDAOImpl implements FaceUserDAO {
 		JSONArray jsonArray = null;
 		jsonArray = ConnectionClass.executePreparedStatement(statement);
 
-		System.out.println(jsonArray.toString());
-
 		return jsonArray;
 	}
 

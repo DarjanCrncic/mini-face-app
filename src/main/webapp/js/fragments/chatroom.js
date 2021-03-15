@@ -42,7 +42,7 @@ $.ajax({
 							$('#messageDiv').append('<div id="' + userArr[i] + '" class="chatWindows"><h5>' + userArr[i] + '</h5><hr class="horizontalSep"></div>');
 							$('#'+userArr[i]).hide();
 						}
-						$('#usersDiv').append('<button id="switchChat_' + userArr[i] + '" class="btn btn-outline-primary onlineUsersButton">' + userArr[i] + '</button>');
+						$('#usersDiv').prepend('<button id="switchChat_' + userArr[i] + '" class="btn btn-outline-primary onlineUsersButton">' + userArr[i] + '</button>');
 
 						$('#switchChat_' + userArr[i]).click(function() {
 							$('.chatWindows').hide();
@@ -63,7 +63,7 @@ $.ajax({
 				// used when onClose event is fired, receive a message to remove specific user button and chat window
 				if(JSON.parse(message.data).init == "delete"){
 					$('#switchChat_'+JSON.parse(message.data).content).remove();
-					$('#' + JSON.parse(message.data).content).remove();
+					//$('#' + JSON.parse(message.data).content).remove();
 				}
 			}
 			// send notification on creating new websocket

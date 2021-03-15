@@ -63,5 +63,9 @@
 
 	<%@ include file="partials/footer.jsp"%>
 
+	<script type="text/javascript">
+		
+	</script>
+
 </body>
 </html>

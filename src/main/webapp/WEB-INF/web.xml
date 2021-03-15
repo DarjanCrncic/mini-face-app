@@ -54,6 +54,16 @@
 		<param-name>log4j-config-location</param-name>
 		<param-value>WEB-INF/classes/log4j.properties</param-value>
 	</context-param>
+	
+	<context-param>
+		<param-name>jasper-post-file</param-name>
+		<param-value>WEB-INF/classes/PostReport.jasper</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>word-post-file</param-name>
+		<param-value>WEB-INF/classes/postTemplate.docx</param-value>
+	</context-param>
 
 
 </web-app>

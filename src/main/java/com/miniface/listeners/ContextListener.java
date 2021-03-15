@@ -18,16 +18,24 @@ import com.miniface.utils.QueryHolder;
 public class ContextListener implements ServletContextListener {
 	
 	public static ThreadPoolExecutor executor;
+	public static String jasperPostPath;
+	public static String wordPostTemplatePath;
  
     @Override
     public void contextInitialized(ServletContextEvent event) {
         ServletContext context = event.getServletContext();
+        
         String log4jConfigFile = context.getInitParameter("log4j-config-location");
         String fullPath = context.getRealPath("") + File.separator + log4jConfigFile;
-         
         PropertyConfigurator.configure(fullPath);
         
         QueryHolder.loadProperties();
+        
+        String jasperPost = context.getInitParameter("jasper-post-file");
+        jasperPostPath = context.getRealPath("") + File.separator + jasperPost;
+        
+        String postWord = context.getInitParameter("word-post-file");
+        wordPostTemplatePath = context.getRealPath("") + File.separator + postWord;
         
         executor = new ThreadPoolExecutor(10, 10, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     }

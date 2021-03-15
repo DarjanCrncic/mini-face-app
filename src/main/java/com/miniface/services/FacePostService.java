@@ -28,4 +28,6 @@ public interface FacePostService {
 	public JSONArray getLikes(int entityID, String type);
 
 	public int deleteComment(int commentID);
+
+	public JSONArray getPostByID(int postID);
 }
