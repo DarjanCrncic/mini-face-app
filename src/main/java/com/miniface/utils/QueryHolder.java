@@ -70,10 +70,35 @@ public class QueryHolder {
         SQL.GET_USER_INFO = properties.getProperty("getUserInfo");
         SQL.UPDATE_USER_INFO = properties.getProperty("updateUserInfo");
         SQL.UPDATE_USER_NOTIFY = properties.getProperty("updateUserNotify");
+        
+        SQL.PRORACUNI_CREATE_GROUP = properties.getProperty("proracuniCreateGroup");
+        SQL.PRORACUNI_CREATE_ENTRY = properties.getProperty("proracuniCreateEntry");
+        SQL.PRORACUNI_GET_GROUPS = properties.getProperty("proracuniGetGroups");
+        SQL.PRORACUNI_GET_ENTRIES = properties.getProperty("proracuniGetEntries");
+        SQL.PRORACUNI_UPDATE_ENTRY = properties.getProperty("proracuniUpdateEntry");
+        SQL.PRORACUNI_DELETE_ENTRY = properties.getProperty("proracuniDeleteEntry");
+        SQL.PRORACUNI_GET_PRICE = properties.getProperty("proracuniGetPrice");
+        SQL.PRORACUNI_UPDATE_PRICE = properties.getProperty("proracuniUpdatePrice");
+        SQL.PRORACUNI_GET_TYPES = properties.getProperty("proracuniGetTypes");
+        SQL.PRORACUNI_LOCK_GROUP = properties.getProperty("proracuniLockGroup");
+        SQL.PRORACUNI_GET_PREVIEW = properties.getProperty("proracuniGetPreview");
+     
     }
     
     public static class SQL {
-        public static String UPDATE_USER_IMAGE;
+    	public static String PRORACUNI_GET_PREVIEW;
+    	public static String PRORACUNI_LOCK_GROUP;
+		public static String PRORACUNI_GET_TYPES;
+		public static String PRORACUNI_UPDATE_PRICE;
+        public static String PRORACUNI_GET_PRICE;
+		public static String PRORACUNI_DELETE_ENTRY;
+		public static String PRORACUNI_UPDATE_ENTRY;
+		public static String PRORACUNI_GET_ENTRIES;
+		public static String PRORACUNI_GET_GROUPS;
+		public static String PRORACUNI_CREATE_ENTRY;
+		public static String PRORACUNI_CREATE_GROUP;
+        
+		public static String UPDATE_USER_IMAGE;
         public static String GET_USER_INFO;
 		public static String REGISTER_USER;
         public static String LOGIN_USER;

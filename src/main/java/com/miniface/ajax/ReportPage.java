@@ -71,7 +71,7 @@ public class ReportPage extends JSONServlet {
 		}
 		
 		str.append(" AND ");
-		str.append("(fp.creation_time BETWEEN to_date('" + startDate + "', 'MM/DD/YYYY') AND to_date('" + endDate +"', 'MM/DD/YYYY'))" );
+		str.append("(fp.creation_time BETWEEN to_date('" + startDate + "', 'MM/DD/YYYY') AND to_date('" + endDate +"', 'MM/DD/YYYY')+1)" );
 		
 		pdfReportInfo = str.toString();
 		

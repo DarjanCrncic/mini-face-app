@@ -42,6 +42,13 @@
 				<li class="nav-item">
 						<button class="nav-link nav-button navigation" id="reportPage" onclick="MainObject.navigationPage(this.id)">Report</button>		
 				</li>
+				<li class="nav-item">
+						<button class="nav-link nav-button navigation" id="proracuni" onclick="MainObject.navigationPage(this.id)">Proračuni</button>		
+				</li>
+				<li class="nav-item">
+						<button class="nav-link nav-button navigation" id="racuni" onclick="MainObject.navigationPage(this.id)">Računi</button>		
+				</li>
+				
 				
 		
 			</ul>

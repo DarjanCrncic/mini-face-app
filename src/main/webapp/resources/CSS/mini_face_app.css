@@ -119,10 +119,14 @@
 
 .select2-selection--single{
 	padding-top: 8px !important;	
-}
+} 
 
 .select2-selection {
   height: 38px !important;
+}
+
+#multiSelectTypes.select2-selection  {
+  height: 42px !important;
 }
 
 .new-post-div {
@@ -134,7 +138,7 @@
 	background-color: #f8f9fa;
 }
 
-.delete-button, .edit-button, .like-button, .create-button {
+.delete-button, .edit-button, .like-button, .create-button, .send-button {
 	background-color: transparent;
 	border: none;
 	vertical-align: 0;
@@ -389,4 +393,65 @@
   100% { transform: rotate(360deg); }
 }
 
+/* proracuni */
 
+.checkboxovi{
+	margin-left: 0;
+	position: relative;
+	margin-top: 0.75rem;
+}
+
+.active {
+  background-color: #f2f7f7;
+}
+
+#toggleCjenikTable {
+	margin-top: 1.6rem;
+	width: 10rem;
+}
+
+#createPreview{
+	width: 10rem;
+	margin-top: 2rem;
+}
+
+#sentCheck{
+	margin-bottom: 1.5rem;
+}
+
+.labelsEntries{
+	display: block;
+	margin-top: 1rem;
+}
+
+.cjenik-item{
+	margin: 0 0 0.5rem 8rem;
+}
+
+.cjenik-title{
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.cjenik-subtitle{
+	margin-left: 4rem;
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
+}
+
+.newPriceInput{
+	display: inline;
+	width:5.5rem;
+	height:30px;
+}
+
+.updatePriceButtons{
+	height:30px;
+	margin-left: 0.5rem;
+	padding-top: 0;
+	padding-bottom: 0;
+	vertical-align: top;
+}

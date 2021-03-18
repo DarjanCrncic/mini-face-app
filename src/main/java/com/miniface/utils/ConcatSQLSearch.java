@@ -45,13 +45,13 @@ public class ConcatSQLSearch {
 
 		return str.toString();
 	}
-	
+
 	public static String createSQLQueryAddition(String filter, JSONArray filters, JSONArray words, String logicalOperand, String wordPosition, String[] caseAll) {
-		
+
 		StringBuilder str = new StringBuilder();
 		str.append(filter + " (");
 		for (int i = 0; i < filters.length(); i++) {
-			if(filters.get(i).toString().contains("+")) {
+			if (filters.get(i).toString().contains("+")) {
 				filters.put(i, "(" + filters.get(i).toString().replaceAll("\\+", " || ' ' || ") + ")");
 			}
 			if (filters.get(i).toString().equals("all")) {
@@ -84,6 +84,29 @@ public class ConcatSQLSearch {
 			}
 		}
 		str.append(")");
+		return str.toString();
+	}
+
+	public static String createPricingPreview(String sent, String startDate, String endDate, String[] types, String group) {
+		StringBuilder str = new StringBuilder();
+
+		str.append(" AND pg.sent = '");
+		str.append(sent + "'");
+		str.append(" AND (ps.creation_time BETWEEN to_date('" + startDate + "', 'MM/DD/YYYY') AND to_date('" + endDate + "', 'MM/DD/YYYY')+1)");
+
+		if (!types[0].equals("all")) {
+			str.append(" AND ps.type IN (");
+			for (String type : types) {
+				str.append(type + ",");
+			}
+			str.deleteCharAt(str.length() - 1);
+			str.append(") ");
+		}
+		
+		if(!group.equals("all")) {
+			str.append(" AND ps.group_id = " + group);
+		}
+	
 		return str.toString();
 	}
 

@@ -96,15 +96,14 @@ public class ConnectionClass {
 				
 				for(int i=1; i<=columnNumber; i++) {
 					String columnName = metaData.getColumnName(i);
-									
 					switch(metaData.getColumnType(i)) {
+					case java.sql.Types.FLOAT: json.put(columnName, resultSet.getFloat(columnName)); break; 
 					case java.sql.Types.NUMERIC: json.put(columnName, resultSet.getInt(columnName)); break;
 					case java.sql.Types.VARCHAR: json.put(columnName, (resultSet.getString(columnName) != null) ? resultSet.getString(columnName) : ""); break;
 					case java.sql.Types.TIMESTAMP: json.put(columnName, (resultSet.getTimestamp(columnName) != null) ? resultSet.getTimestamp(columnName).toString() : ""); break;
 					case java.sql.Types.BLOB: json.put(columnName, (resultSet.getBlob(columnName) != null) ? resultSet.getBlob(columnName).toString() : ""); break;
 					default: json.append(columnName, ""); break;
 					}
-					
 				}
 				jsonArray.put(json);
 			}
@@ -126,5 +125,43 @@ public class ConnectionClass {
 		return arr;
 	}
 	
+	public static JSONArray parseResultSetAsJSONwithFloat(ResultSet resultSet) {
+		
+		JSONArray jsonArray = new JSONArray();
+		try {
+			while(resultSet.next()) {
+				ResultSetMetaData metaData = resultSet.getMetaData();
+				int columnNumber = metaData.getColumnCount();
+				JSONObject json = new JSONObject();
+				
+				for(int i=1; i<=columnNumber; i++) {
+					String columnName = metaData.getColumnName(i);
+					switch(metaData.getColumnType(i)) { 
+					case java.sql.Types.NUMERIC: json.put(columnName, resultSet.getFloat(columnName)); break;
+					case java.sql.Types.VARCHAR: json.put(columnName, (resultSet.getString(columnName) != null) ? resultSet.getString(columnName) : ""); break;
+					case java.sql.Types.TIMESTAMP: json.put(columnName, (resultSet.getTimestamp(columnName) != null) ? resultSet.getTimestamp(columnName).toString() : ""); break;
+					case java.sql.Types.BLOB: json.put(columnName, (resultSet.getBlob(columnName) != null) ? resultSet.getBlob(columnName).toString() : ""); break;
+					default: json.append(columnName, ""); break;
+					}
+				}
+				jsonArray.put(json);
+			}
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in parseResultSetAsJSON", ex);
+		}finally {
+			ConnectionClass.closeResultSet(resultSet);
+		}
+
+		return jsonArray;
+	}
+	
+	public static JSONArray executePreparedStatementWithFloat(PreparedStatement statement) throws SQLException{
+		
+		ResultSet set = statement.executeQuery();
+		JSONArray arr = null;
+		arr = parseResultSetAsJSONwithFloat(set);
+		ConnectionClass.closePreparedStatement(statement);
+		return arr;
+	}
 	
 }

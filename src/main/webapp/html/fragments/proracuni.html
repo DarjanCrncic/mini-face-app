@@ -1,0 +1,85 @@
+<table id="proracuniGrupe" ></table>
+
+<input type="hidden" value="0" id="groupIDInput">
+<input type="hidden" value="0" id="entryIDInput">
+<input type="hidden" value="false" id="showOrNoInput">
+
+<!-- proracuni add group modal -->
+<div class="modal fade" id="proracuniAddGroupModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Create Group</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form value="">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="proracuniNewGroupName">Group Name</label> <input type="text"
+							class="form-control" id="proracuniNewGroupName">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" id="proracuniCreateGroupConfirm">Create</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!-- proracuni add/edit entry modal -->
+<div class="modal fade" id="proracuniAddEntryModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="proracuniAddEditTitle">Create Entry</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form value="">
+				<div class="modal-body">
+					<div class="form-group">
+						
+						
+						<label for="selectSendingType" class="labelsEntries">Tip pošiljke</label> 
+						<select  id="selectSendingType" style="width: 100%;"></select>
+						<br>
+						<label for="selectLocal" class="labelsEntries">Lokacija isporuke</label> 
+						<select  id="selectLocal" style="width: 100%;"></select>
+						<br>
+						<div>
+						<input class="form-check-input checkboxovi" type="checkbox" value="" id="povratnoCheck">
+ 						<label class="form-check-label" for="povratnoCheck">Povratno</label>
+						</div>
+						
+						<label for="entryWeight" class="labelsEntries">Weight (g)</label> 
+						<input type="number" class="form-control" id="entryWeight">
+						
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" id="proracuniCreateEntryConfirm" value="add">Confirm</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+
+<script src="js/fragments/proracuni.js"></script>

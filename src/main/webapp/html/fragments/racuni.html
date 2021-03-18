@@ -1,0 +1,77 @@
+<button class="btn btn-primary" id="toggleCjenikTable">Prikazi Cjenik</button>
+
+<div id="forToggleDivCjenik" style="display:none;">
+<div id="cjenik"></div>
+</div>
+
+
+
+<h4 style="margin-top: 2rem;">Odaberi filtere</h4>
+<hr>
+
+<div style="padding-left: 1.35rem;">
+
+	<form>
+		<select id="chooseEntryGroup" style="width: 10rem"></select>
+		
+		<div>
+			<input class="form-check-input checkboxovi" type="checkbox" value="" id="sentCheck"> 
+			<label class="form-check-label" for="sentCheck">Poslano</label>
+		</div>
+
+		<select class="form-control" id="multiSelectTypes" name="types[]" multiple="multiple" style="width: 40rem"></select>
+
+		<table>
+			<tr>
+				<th class="datepicker-th">
+					<h5 class="blue-titles-report">Start date:</h5> <input
+					class="datepickerRacuni" data-provide="datepickerRacuni" id="datepickerStartRacuni"/>
+				</th>
+				<th>
+					<h5 class="blue-titles-report datepickerEnd">End date:</h5> 
+					<input class="datepickerRacuni" data-provide="datepickerRacuni"  id="datepickerEndRacuni"/>
+				</th>
+			</tr>
+		</table>	
+	</form>
+</div>
+
+<button class="btn btn-primary" id="createPreview">Preview</button>
+<hr>
+
+<div id="previewDiv"></div>
+
+<!-- proracuni edit price modal -->
+<div class="modal fade" id="proracuniEditPriceModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit price</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form value="">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="proracuniNewPrice">New Price</label> <input type="number"
+							class="form-control" id="proracuniNewPrice" step="0.01">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" id="proracuniNewPriceConfirm">Confirm</button>
+				</div>
+				<input type="hidden" val="0" id="priceEntryID">
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<script src="js/libs/bootstrap-datepicker/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<link href="js/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+<script src="js/fragments/racuni.js"></script>
