@@ -205,5 +205,29 @@ public class ProracuniServiceImpl implements ProracuniService{
 		return arr;
 	}
 	
+	@Override
+	public int savePreviewPart(JSONArray previewParts) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int result = 0;
+		
+		try { 
+			connection = ConnectionClass.getConnection();
+			connection.setAutoCommit(false);
+			ProracuniServiceDAOImpl psdao = new ProracuniServiceDAOImpl();
+			result = psdao.savePreviewPart(previewParts, connection, statement);
+			connection.commit();
+			
+		} catch (SQLException ex) {
+			LOGGER.error("SQLException in savePreviewPart(proracuni)", ex);
+			ConnectionClass.doRollback(connection);
+		} finally {
+			ConnectionClass.closePreparedStatement(statement);
+			ConnectionClass.closeConnection(connection);
+		}
+		
+		return result;
+	}
+	
 
 }

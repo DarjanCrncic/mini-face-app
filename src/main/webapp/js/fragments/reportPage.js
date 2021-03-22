@@ -53,8 +53,7 @@ $('#createPDFButton').click(function() {
 		contentType: "application/json",
 		data: JSON.stringify(input),
 		success: function(response) {
-			
-			
+		
 			var a = document.createElement('a');
 			a.href = "ReportPage";
 			a.download = 'test.pdf';

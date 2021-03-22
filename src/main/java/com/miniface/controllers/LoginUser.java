@@ -42,6 +42,9 @@ public class LoginUser extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		System.out.println("User login:");
 
 		String username = RequestValidator.validateRequest(request, "form-username");

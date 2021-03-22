@@ -28,4 +28,6 @@ public interface ProracuniServiceDAO {
 
 	JSONArray getPreviewData(String query, Connection connection, PreparedStatement statement) throws SQLException;
 
+	int savePreviewPart(JSONArray previewParts, Connection connection, PreparedStatement statement) throws SQLException;
+
 }

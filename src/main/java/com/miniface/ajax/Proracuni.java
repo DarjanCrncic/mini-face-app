@@ -10,12 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.miniface.controllers.JSONServlet;
 import com.miniface.entities.ProracuniEntryEntity;
 import com.miniface.services.ProracuniServiceImpl;
 import com.miniface.utils.ConcatSQLSearch;
 import com.miniface.utils.InputValidator;
+import com.miniface.utils.JasperPDF;
 import com.miniface.utils.RequestValidator;
 
 @WebServlet("/Proracuni")
@@ -123,10 +125,9 @@ public class Proracuni extends JSONServlet {
 			String[] types = request.getParameterValues("types[]");
 			String group = RequestValidator.validateRequest(request, "group");
 
-			if (sent != null && startDate != null && endDate != null && group != null && types.length > 0) {
+			if (sent != null && startDate != null && endDate != null && group != null && types != null && types.length > 0) {
 				String query = ConcatSQLSearch.createPricingPreview(sent, startDate, endDate, types, group);
 				arr = ps.getPreviewData(query);
-				System.out.println(query);
 				json.put("data", arr);
 				result = 1;
 			}
@@ -135,7 +136,29 @@ public class Proracuni extends JSONServlet {
 		if (operation.equals("proracuni_lockGroup") && Integer.parseInt(ID) > 0) {
 			result = ps.lockGroup(Integer.parseInt(ID));
 		}
-
+		
+		if(operation.equals("proracuni_savePreview")) {
+			JSONTokener jsonToken = new JSONTokener(request.getInputStream());
+			JSONObject jsonRequest = new JSONObject(jsonToken);
+			JSONArray previewParts = new JSONArray(jsonRequest.getJSONArray("previewParts"));
+			
+			result = ps.savePreviewPart(previewParts);
+			JSONObject previewJSON = new JSONObject();
+			previewJSON.put("previewID", result);
+			json.put("data", previewJSON);
+		}
+		
+		if(operation.equals("proracuni_downloadPreview")) {
+			String previewID = RequestValidator.validateRequest(request, "previewID");
+		
+			String previewPDF = JasperPDF.getJasperPDFPreview(Integer.parseInt(previewID));
+			
+			response.setCharacterEncoding("UTF-8");
+	    	json.put("data", previewPDF);	
+	    	
+	    	result = 1;
+		}
+		
 		if (result == 0) {
 			json.put("message", "Error in proracuni");
 			json.put("status", "error");
@@ -143,10 +166,8 @@ public class Proracuni extends JSONServlet {
 			json.put("message", "Transaction successful");
 			json.put("status", "success");
 		}
-
-		response.setCharacterEncoding("UTF-8");
+		
 		response.getWriter().write(json.toString());
-
 	}
 
 }

@@ -49,6 +49,8 @@ public class RegisterUser extends HttpServlet {
 		
 		InputValidator inputValidator = new InputValidator();
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		String name = request.getParameter("form-firstName");	
 		String surname = request.getParameter("form-lastName");
 		String username = request.getParameter("form-username");
@@ -60,7 +62,7 @@ public class RegisterUser extends HttpServlet {
 		faceUser.setEmail(email);
 		faceUser.setUsername(username);
 		faceUser.setPassword(password);
-		
+			
 		request.setAttribute("form-firstName", name);
 		request.setAttribute("form-lastName", surname);
 		request.setAttribute("form-username", username);

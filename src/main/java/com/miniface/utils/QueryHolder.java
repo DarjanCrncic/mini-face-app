@@ -82,10 +82,12 @@ public class QueryHolder {
         SQL.PRORACUNI_GET_TYPES = properties.getProperty("proracuniGetTypes");
         SQL.PRORACUNI_LOCK_GROUP = properties.getProperty("proracuniLockGroup");
         SQL.PRORACUNI_GET_PREVIEW = properties.getProperty("proracuniGetPreview");
+        SQL.PRORACUNI_INSERT_PREVIEW_PART = properties.getProperty("insertPreviewPart");
      
     }
     
     public static class SQL {
+    	public static String PRORACUNI_INSERT_PREVIEW_PART;
     	public static String PRORACUNI_GET_PREVIEW;
     	public static String PRORACUNI_LOCK_GROUP;
 		public static String PRORACUNI_GET_TYPES;

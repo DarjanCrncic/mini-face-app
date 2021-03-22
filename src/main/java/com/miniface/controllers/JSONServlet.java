@@ -23,6 +23,7 @@ public class JSONServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 	    request.setCharacterEncoding("UTF-8");
 	    JSONObject json = new JSONObject();
 
@@ -39,6 +40,7 @@ public class JSONServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 	    request.setCharacterEncoding("UTF-8");
 	    JSONObject json = new JSONObject();

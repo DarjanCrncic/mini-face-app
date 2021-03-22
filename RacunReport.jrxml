@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RacunReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="200af13c-5e51-4df0-86fe-23661747ea52">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<subDataset name="Dataset1" uuid="d9e71f4e-a6f7-411f-a5b4-dfe1bdef89f5">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+		<queryString language="plsql">
+			<![CDATA[select * from proracuni_previews where preview_id = 1]]>
+		</queryString>
+		<field name="TYPE_TITLE" class="java.lang.String"/>
+		<field name="SUBTITLE_TUZEMNO" class="java.lang.String"/>
+		<field name="SUBTITLE_INOZEMNO" class="java.lang.String"/>
+		<field name="ITEMS_TUZEMNO" class="java.lang.String"/>
+		<field name="ITEMS_INOZEMNO" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="preview_id" class="java.lang.Integer"/>
+	<queryString language="plsql">
+		<![CDATA[select * from proracuni_previews where preview_id = $P{preview_id}]]>
+	</queryString>
+	<field name="TYPE_TITLE" class="java.lang.String"/>
+	<field name="SUBTITLE_TUZEMNO" class="java.lang.String"/>
+	<field name="SUBTITLE_INOZEMNO" class="java.lang.String"/>
+	<field name="ITEMS_TUZEMNO" class="java.lang.String"/>
+	<field name="ITEMS_INOZEMNO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="192" y="14" width="178" height="30" uuid="c02ded9b-84f6-4a3b-bfd3-a77f9114033e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="19" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Izračun cjenika]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="75" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="0" width="525" height="20" uuid="7112a9f2-7ccd-4af3-8375-a67073577133">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ceaa7d9a-2a07-485c-a95c-225714e76c95"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TYPE_TITLE}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="60" y="20" width="475" height="15" isRemoveLineWhenBlank="true" uuid="c5e37d66-05c6-4c0b-b032-926bbdd89a9d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b60c345-bf9c-4d37-aaf7-c4bd92243e3e"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBTITLE_TUZEMNO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="60" y="50" width="475" height="15" isRemoveLineWhenBlank="true" uuid="ccaf0b2e-7b46-4c43-9aca-06f31bb8f814">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="095b069b-fc08-4a45-8543-4f04b254c9d0"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBTITLE_INOZEMNO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="90" y="35" width="425" height="10" isRemoveLineWhenBlank="true" uuid="226b57de-2e2d-4d80-b7b2-2260c51d20eb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="48ed4f7f-dd91-412f-a897-710627e9a8b9"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEMS_TUZEMNO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="90" y="65" width="425" height="10" isRemoveLineWhenBlank="true" uuid="fc5f1a20-061c-4ed9-aa97-52e819567520">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd6ec69c-0981-4328-abfd-8889834022cb"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEMS_INOZEMNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

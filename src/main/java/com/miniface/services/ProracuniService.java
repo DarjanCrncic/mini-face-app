@@ -22,4 +22,6 @@ public interface ProracuniService {
 
 	JSONArray getPreviewData(String query);
 
+	int savePreviewPart(JSONArray previewParts);
+
 }

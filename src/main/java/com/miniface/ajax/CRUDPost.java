@@ -67,6 +67,8 @@ public class CRUDPost extends JSONServlet {
 	@Override
 	protected void doPostLoggedIn(HttpServletRequest request, HttpServletResponse response, HttpSession session, JSONObject json) throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
+		
 		String title = RequestValidator.validateRequest(request, "title");
 		String body = RequestValidator.validateRequest(request, "body");
 		String operation = RequestValidator.validateRequest(request, "operation");
@@ -75,11 +77,11 @@ public class CRUDPost extends JSONServlet {
 		String groupID = RequestValidator.validateRequest(request, "groupID");
 		String comment = RequestValidator.validateRequest(request, "comment");
 		String commentID = RequestValidator.validateRequest(request, "commentID");
-		
+				
 		FacePostServiceImpl fpsi = new FacePostServiceImpl();
 		InputValidator inputValidator = new InputValidator();
 		JSONObject newPost = null;
-
+	
 		// POST operation if add post was called
 		if (operation.equals("add")) {
 

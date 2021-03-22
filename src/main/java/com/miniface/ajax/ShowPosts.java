@@ -67,7 +67,6 @@ public class ShowPosts extends JSONServlet {
 		FacePostServiceImpl fpsi = new FacePostServiceImpl();
 		JSONArray arr = fpsi.searchVissiblePosts(Integer.parseInt((String) session.getAttribute("userID")), filters, words, logicalOperand, wordPosition, pageNumber, rowNumber);
 		
-		
 		if(!arr.isEmpty() && arr.length() > 0){
 			if(arr.length() == rowNumber+1) {
 				arr.remove(rowNumber);

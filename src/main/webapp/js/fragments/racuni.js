@@ -93,6 +93,8 @@ $('#createPreview').click(function() {
 
 function showPricingPreview(data) {
 	$('#previewDiv').empty();
+	$('#savePreview').unbind();
+	$('#downloadPreview').hide();
 	let coveredTypes = [];
 	let localTuzemno = [];
 	let localInozemno = [];
@@ -101,29 +103,105 @@ function showPricingPreview(data) {
 		if (!coveredTypes.includes(item.TYPE)) {
 			coveredTypes.push(item.TYPE);
 			$('#previewDiv').append('<div id="previewType_' + item.TYPE + '"></div><hr>');
-			$('#previewType_' + item.TYPE + '').append('<p class="cjenik-title">' + item.TYPE_TEXT + ": ukupno "+ item.COUNTPERTYPE+
-			" kom., ukupna gramaža "+item.WEIGHTPERTYPE+"g, ukupna vrijednost "+item.PRICEPERTYPE +'kn</p>');
+			$('#previewType_' + item.TYPE).append('<p class="cjenik-title" id="cjenikTitle_' + item.TYPE + '">' + item.TYPE_TEXT + ": ukupno " + item.COUNTPERTYPE +
+				" kom., ukupna gramaža " + item.WEIGHTPERTYPE + "g, ukupna vrijednost " + item.PRICEPERTYPE.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'kn</p>');
 		}
 		if (!localTuzemno.includes(item.TYPE) && item.LOCAL === 1) {
-			$('#previewType_' + item.TYPE + '').append('<div id="previewTypeTuzemni_' + item.TYPE + '"></div>');
-			$('#previewTypeTuzemni_' + item.TYPE + '').append('<p class="cjenik-subtitle">Tuzemni: ukupno '+ item.COUNTPERTYPELOCAL+
-			" kom., ukupna gramaža "+item.WEIGHTPERTYPELOCAL+"g, ukupna vrijednost "+item.PRICEPERTYPELOCAL +'kn</p>');
+			$('#previewType_' + item.TYPE).append('<div id="previewTypeTuzemni_' + item.TYPE + '"></div>');
+			$('#previewTypeTuzemni_' + item.TYPE).append('<p class="cjenik-subtitle" id="subtitleTuzemni_' + item.TYPE + '">Tuzemni: ukupno ' + item.COUNTPERTYPELOCAL +
+				" kom., ukupna gramaža " + item.WEIGHTPERTYPELOCAL + "g, ukupna vrijednost " + item.PRICEPERTYPELOCAL.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'kn</p>');
+			$('#previewTypeTuzemni_' + item.TYPE).append('<div id="previewTypeTuzemniItems_' + item.TYPE + '"></div>');
 			localTuzemno.push(item.TYPE);
 		}
 
 		if (!localInozemno.includes(item.TYPE) && item.LOCAL === 2) {
-			$('#previewType_' + item.TYPE + '').append('<div id="previewTypeInozemni_' + item.TYPE + '"></div>');
-			$('#previewTypeInozemni_' + item.TYPE + '').append('<p class="cjenik-subtitle">Inozemni: ukupno '+ item.COUNTPERTYPELOCAL+
-			" kom., ukupna gramaža "+item.WEIGHTPERTYPELOCAL+"g, ukupna vrijednost "+item.PRICEPERTYPELOCAL +'kn</p>');
-			localTuzemno.push(item.TYPE);
+			$('#previewType_' + item.TYPE).append('<div id="previewTypeInozemni_' + item.TYPE + '"></div>');
+			$('#previewTypeInozemni_' + item.TYPE).append('<p class="cjenik-subtitle" id="subtitleInozemni_' + item.TYPE + '">Inozemni: ukupno ' + item.COUNTPERTYPELOCAL +
+				" kom., ukupna gramaža " + item.WEIGHTPERTYPELOCAL + "g, ukupna vrijednost " + item.PRICEPERTYPELOCAL.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'kn</p>');
+			$('#previewTypeInozemni_' + item.TYPE).append('<div id="previewTypeInozemniItems_' + item.TYPE + '"></div>');
+			localInozemno.push(item.TYPE);
+
 		}
 
 		if (item.LOCAL === 1) {
-			$('#previewTypeTuzemni_' + item.TYPE + '').append('<div class="cjenik-item"><span>1kom ' + item.PACKAGE_WEIGHT + 'g ' + item.PRICE.toFixed(2) + "kn " + '</span></div>');
+			$('#previewTypeTuzemniItems_' + item.TYPE + '').append('<div class="cjenik-item"><span>1kom ' +
+				item.PACKAGE_WEIGHT + 'g ' + item.PRICE.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + "kn " + '</span></div>\n');
 		} else {
-			$('#previewTypeInozemni_' + item.TYPE + '').append('<div class="cjenik-item"><span>1kom ' + item.PACKAGE_WEIGHT + 'g ' + item.PRICE.toFixed(2) + "kn " + '</span></div>');
+			$('#previewTypeInozemniItems_' + item.TYPE + '').append('<div class="cjenik-item"><span>1kom ' +
+				item.PACKAGE_WEIGHT + 'g ' + item.PRICE.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + "kn " + '</span></div>\n');
 		}
 	});
+	let previewParts = [];
+	let input;
+
+	coveredTypes.forEach(function(type) {
+
+		input = {
+			partType: type,
+			typeTitle: $('#cjenikTitle_' + type).text(),
+			subtitleTuzemno: $('#subtitleTuzemni_' + type).text(),
+			subtitleInozemno: $('#subtitleInozemni_' + type).text(),
+			itemsTuzemno: $('#previewTypeTuzemniItems_' + type).text(),
+			itemsInozemno: $('#previewTypeInozemniItems_' + type).text(),
+		}
+		previewParts.push(input);
+	});
+	$('#savePreview').show();
+	savePreviewListener(previewParts);
+}
+
+function savePreviewListener(previewParts) {
+	$('#savePreview').click(function() {
+		$.ajax({
+			type: "POST",
+			url: 'Proracuni?operation=proracuni_savePreview',
+			//dataType: 'json',
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify({ previewParts: previewParts }),
+			success: function(data) {
+				if (data.status == 'success') {
+					$('#savePreview').hide();
+					$('#downloadPreview').show();
+					$('#downloadPreview').unbind();
+					downloadPreviewListener(data.data.previewID);
+				} else {
+					alert(data.message);
+				}
+			},
+			error: function() {
+				alert("Something went wrong, try again later");
+			}
+		});
+	});
+}
+
+function downloadPreviewListener(previewID) {
+	$('#downloadPreview').click(function() {
+		let input = {
+			previewID: previewID,
+			operation: "proracuni_downloadPreview"
+		}
+
+		$.ajax({
+			type: "POST",
+			url: 'Proracuni',
+			data: input,
+			success: function(data) {
+				//window.open("data:application/pdf;base64," + data.data, '_blank');
+
+				const linkSource = 'data:application/pdf;base64,'+data.data;
+				const downloadLink = document.createElement("a");
+				const fileName = "preview.pdf";
+
+				downloadLink.href = linkSource;
+				downloadLink.download = fileName;
+				downloadLink.click();
+			},
+			error: function() {
+				alert("Something went wrong, try again later");
+			}
+		})
+	})
 }
 
 
