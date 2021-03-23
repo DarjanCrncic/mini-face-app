@@ -26,3 +26,6 @@ context.xml
 hs_err_pid*
 /DataAdapter.xml
 /src/main/webapp/js/libs/select2
+/PostReport.jasper
+/RacunReport.jasper
+/target/

@@ -64,6 +64,11 @@
 		<param-name>word-post-file</param-name>
 		<param-value>WEB-INF/classes/postTemplate.docx</param-value>
 	</context-param>
+	
+	<context-param>
+		<param-name>jasper-preview-file</param-name>
+		<param-value>WEB-INF/classes/RacunReport.jasper</param-value>
+	</context-param>
 
 
 </web-app>

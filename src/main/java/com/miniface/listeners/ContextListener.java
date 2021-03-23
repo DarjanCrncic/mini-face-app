@@ -20,6 +20,7 @@ public class ContextListener implements ServletContextListener {
 	public static ThreadPoolExecutor executor;
 	public static String jasperPostPath;
 	public static String wordPostTemplatePath;
+	public static String jasperPreviewPath;
  
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -33,6 +34,9 @@ public class ContextListener implements ServletContextListener {
         
         String jasperPost = context.getInitParameter("jasper-post-file");
         jasperPostPath = context.getRealPath("") + File.separator + jasperPost;
+        
+        String jasperPreview = context.getInitParameter("jasper-preview-file");
+        jasperPreviewPath = context.getRealPath("") + File.separator + jasperPreview;
         
         String postWord = context.getInitParameter("word-post-file");
         wordPostTemplatePath = context.getRealPath("") + File.separator + postWord;

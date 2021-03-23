@@ -21,6 +21,7 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.miniface.listeners.ContextListener;
 import com.miniface.services.FacePostServiceImpl;
 
 public class WordDocument {
@@ -67,8 +68,10 @@ public class WordDocument {
 	
 	public static void CreateDocumentDocx4j(ByteArrayOutputStream baos, int postID) {
 		try {
-			//String path = ContextListener.wordPostTemplatePath;
-			WordprocessingMLPackage wordPackage = WordprocessingMLPackage.load(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\postTemplate.docx"));
+			String path = ContextListener.wordPostTemplatePath;
+			WordprocessingMLPackage wordPackage = WordprocessingMLPackage.load(new File(path));
+			
+			//WordprocessingMLPackage wordPackage = WordprocessingMLPackage.load(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\postTemplate.docx"));
 		
 			MainDocumentPart mainDocumentPart = wordPackage.getMainDocumentPart();
 

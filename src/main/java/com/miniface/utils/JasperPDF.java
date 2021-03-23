@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 
+import com.miniface.listeners.ContextListener;
+
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -21,9 +23,10 @@ public class JasperPDF {
 	public static ServletOutputStream getJasperPDFPost(int userID, String username, String fullName, String placeholder, ServletOutputStream outStream) {
 		try {
 
-			//String path = ContextListener.jasperPostPath; //ovo radi!
-			JasperReport report = (JasperReport) JRLoader.loadObject(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\PostReport.jasper"));
+			String path = ContextListener.jasperPostPath; //ovo radi!
+			JasperReport report = (JasperReport) JRLoader.loadObject(new File(path));
 			
+			//JasperReport report = (JasperReport) JRLoader.loadObject(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\PostReport.jasper"));
 			
 			Connection connection = ConnectionClass.getConnection();
 			Map<String, Object> parameters = new HashMap<String, Object>();
@@ -50,8 +53,10 @@ public class JasperPDF {
 		
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		try {
-			//String path = ContextListener.jasperPostPath; //ovo radi!
-			JasperReport report = (JasperReport) JRLoader.loadObject(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\RacunReport.jasper"));
+			String path = ContextListener.jasperPreviewPath; //ovo radi!
+			JasperReport report = (JasperReport) JRLoader.loadObject(new File(path));
+			
+			//JasperReport report = (JasperReport) JRLoader.loadObject(new File("C:\\Users\\darjan.crncic\\workspaces\\web-development\\MiniFaceApp\\RacunReport.jasper"));
 			
 			Connection connection = ConnectionClass.getConnection();
 			Map<String, Object> parameters = new HashMap<String, Object>();
