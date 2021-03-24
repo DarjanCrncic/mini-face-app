@@ -25,7 +25,4 @@ context.xml
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /DataAdapter.xml
-/src/main/webapp/js/libs/select2
-/PostReport.jasper
-/RacunReport.jasper
 /target/
